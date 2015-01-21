@@ -1,7 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import colorchooser
-from tkinter import messagebox
 import math
 import time
 
