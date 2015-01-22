@@ -40,6 +40,7 @@ long ping(){
 
 void loop()
 {
+	//Needs a bit of refinning but I'll do that when I set up the circuit
 	distance = ping();
 
 	if (distance >= 200 || distance <= 0){
@@ -49,14 +50,9 @@ void loop()
 		Serial.print(distance);
 		Serial.println(" cm");
 	}
-    // send data:  id = 0x00, standrad flame, data len = 8, stmp: data buf
-    CAN.sendMsgBuf(0x00, 0, 8, stmp);
+    CAN.sendMsgBuf(0x00, 0, 8, int(distance));
   
     
     delay(2500);
-    // send data per 100ms
+    // send data per 2.5s
 }
-
-/*********************************************************************************************************
-  END FILE
-*********************************************************************************************************/
