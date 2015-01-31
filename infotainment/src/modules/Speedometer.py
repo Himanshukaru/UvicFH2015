@@ -56,7 +56,7 @@ class Speedometer(object):
 			if (self.tempCounter > 260):
 				self.tempCounter = 260
 			if (self.tempCounter < 0):
-				tempCounter = 0
+				self.tempCounter = 0
 
 			self.the_speed=(start_degree-(value*(math.pi/180)*1.21818181))#*0.01745329)
 			self.current_speed.set(self.tempCounter)
