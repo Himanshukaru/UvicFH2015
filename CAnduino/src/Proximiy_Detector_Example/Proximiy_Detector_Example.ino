@@ -10,8 +10,8 @@
  Some code and wiring inspired by http://en.wikiversity.org/wiki/User:Dstaub/robotcar
  */
 
-#define trigPin 13
-#define echoPin 12
+#define trigPin 5
+#define echoPin 6
 #define led 11
 #define led2 10
 
