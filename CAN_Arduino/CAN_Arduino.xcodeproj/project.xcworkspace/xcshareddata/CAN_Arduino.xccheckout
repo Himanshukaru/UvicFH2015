@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8BA0A5AD-7422-4BAE-BBD6-88787F785937</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CAN_Arduino</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C78C75D9FC163C400C7E02C75E629C92F0B0FD67</key>
+		<string>https://github.com/UVicFH/UvicFH2015</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CAN_Arduino/CAN_Arduino.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C78C75D9FC163C400C7E02C75E629C92F0B0FD67</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/UVicFH/UvicFH2015</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C78C75D9FC163C400C7E02C75E629C92F0B0FD67</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C78C75D9FC163C400C7E02C75E629C92F0B0FD67</string>
+			<key>IDESourceControlWCCName</key>
+			<string>UvicFH2015</string>
+		</dict>
+	</array>
+</dict>
+</plist>
