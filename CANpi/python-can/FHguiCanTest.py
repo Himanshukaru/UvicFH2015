@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 
+# Custom Class import
+import CanMessageRead
+
 #CAN imports
 import can
 can.rc['interface'] = 'socketcan_native'
@@ -9,14 +12,15 @@ can_interface = "can0"
 
 class DistanceGui(object):
 	root = Tk()
-	bus = Bus(can_interface) #Not stoked on this area.. want it to work
 	def __init__(self):
 		self.currentDistance = StringVar()
 		self.currentDistance.set(0)
-		self.frame_rate = 100
+		self.frame_rate = 80
 		self.initializeMainWindow()
 		self.makeMainFrame()
 		self.makeCanvas()
+		
+		self.canMsg = CanMessageRead.CanMessageRead()
 
 	def initializeMainWindow(self):
 		self.root.title("FH CAN TEST")
@@ -37,18 +41,23 @@ class DistanceGui(object):
 		self.distanceTextLabel = ttk.Label(self.mainframe, text="DISTANCE (cm)", font="Helvetica 10 bold")
 		self.distanceTextLabel.grid(column=1, row=1, sticky=(W))
 
-	def increaseNum(self):
+	def increaseNum(self, pDistance):
 		try:
-			msg = self.bus.recv()
-			self.currentDistance.set(msg.data[1])
-
+			self.currentDistance.set(pDistance)
 		except ValueError:
 			pass
-		self.root.after(self.frame_rate, self.increaseNum)
-
+	
+	def pollBus(self):
+		self.canMsg.readBus()
+		if self.canMsg.prevDistance != self.canMsg.currentDistance:
+			self.increaseNum(self.canMsg.currentDistance)
+		else:
+			pass
+		self.root.after(self.frame_rate, self.pollBus)
+	
 	def run(self):
 		#this is where the magic is going to happen
-		self.increaseNum()	
+		self.pollBus()	
 		self.root.mainloop()
 
 if __name__ == "__main__":
