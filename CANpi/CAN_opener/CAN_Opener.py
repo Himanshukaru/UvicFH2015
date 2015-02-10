@@ -21,27 +21,27 @@ FIFTEEN_BIT_MASK    = 0x7FFF
 SIXTEEN_BIT_MASK    = 0xFFFF
 
 class Can_opener(object):
-	"""
-	How this works is to flaten the byte array, bit shift the flattened array, then mask it and return whatever falls out
-	Works regarless of how or where the data is positioned in the array, but array topology must be known. I left pack_data
-	and shift_mask as two functions since you really only need to flaten the data once per frame but you may need to shift 
-	mask it out multiple times. 
-	"""
-	def __init__(self, arg):
-		super(Can_opener, self).__init__()
-		self.arg = arg
-	
-	def pack_data(can_byte_array):
-	    buf=bytes()
-	    buf=buf.join((struct.pack('B', val) for val in can_byte_array))
-	    packed_can_data = int.from_bytes(buf, byteorder='big')
-	    return packed_can_data
-
-	def shift_mask(start_loc, length, lumped_data, filter):
-	    shift = 64 - start_loc - length
-	    lumped_data = lumped_data>>shift
-	    lumped_data = lumped_data & filter
-	    return lumped_data
+    """
+        How this works is to flaten the byte array, bit shift the flattened array, then mask it and return whatever falls out
+        Works regarless of how or where the data is positioned in the array, but array topology must be known. I left pack_data
+        and shift_mask as two functions since you really only need to flaten the data once per frame but you may need to shift
+        mask it out multiple times.
+        """
+    def __init__(self, arg):
+        super(Can_opener, self).__init__()
+        self.arg = arg
+    
+    def pack_data(can_byte_array):
+        buf=bytes()
+        buf=buf.join((struct.pack('B', val) for val in can_byte_array))
+        packed_can_data = int.from_bytes(buf, byteorder='big')
+        return packed_can_data
+    
+    def shift_mask(start_loc, length, lumped_data, filter):
+        shift = 64 - start_loc - length
+        lumped_data = lumped_data>>shift
+        lumped_data = lumped_data & filter
+        return lumped_data
 
 
 
