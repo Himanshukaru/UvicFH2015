@@ -3,7 +3,7 @@ from tkinter import ttk
 import math
 import time
 
-class Speedometer(object):
+class Charge(object):
     root = Tk()
     def __init__(self):        
         self.initializeValues()
@@ -57,4 +57,4 @@ class Speedometer(object):
         
 if __name__ == "__main__":
     
-    testClass = Speedometer()
+    testClass = Charge()
