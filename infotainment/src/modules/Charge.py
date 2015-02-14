@@ -4,14 +4,12 @@ import math
 import time
 
 class Charge(object):
-    root = Tk()
-    def __init__(self):        
-        self.initializeValues()
-        self.makeMainFrame()
-        self.makeCanvas()
+    def __init__(self, root, canvas):
+        self.root = root 
+        self.canvas = canvas
         
-        self.updateCharge()
-        self.root.mainloop()
+        self.initializeValues()
+        self.createWidget()
 
     def initializeValues(self):
         self.backGroundColor = "#ffffff"
@@ -20,25 +18,17 @@ class Charge(object):
         self.fillColor = "white"
         
         self.frame_rate = 80
-        self.center = 110
+        self.center = 120
         self.radius = 110
         self.pieAngle = 90
         
-        self.piePositionAngle = 130
+        self.piePositionAngle = 140
         self.tempCounter = self.pieAngle #TODO m: this will be the charge count; for now its a temp counter
 
-    def makeMainFrame(self):
-        self.mainframe = ttk.Frame(self.root, padding="0 0 0 0")
-        self.mainframe.grid(column=1, row=0, columnspan=1, rowspan=2, sticky=(N, E, W, S))
-        self.mainframe.columnconfigure(0, weight=1)
-        self.mainframe.rowconfigure(0, weight=1)
-
-    def makeCanvas(self):
-        self.chargePie = Canvas(self.mainframe, width=250, height=250, background=self.backGroundColor)
-        self.chargePie.grid(column=0, row=1, sticky=(N,E,W,S))
-        self.chargePie.create_arc(self.center-self.radius, self.center-self.radius, self.center+self.radius, self.center+self.radius, style=PIESLICE, extent=self.pieAngle, outline=self.outlineColor, fill=self.backGroundFillColor, start=self.piePositionAngle)
+    def createWidget(self):
+        self.chargePie = self.canvas.create_arc(self.center-self.radius, self.center-self.radius, self.center+self.radius, self.center+self.radius, style=PIESLICE, extent=self.pieAngle, outline=self.outlineColor, fill=self.backGroundFillColor, start=self.piePositionAngle)
         
-        self.chargeDeltaPie = self.chargePie.create_arc(self.center-self.radius, self.center-self.radius, self.center+self.radius, self.center+self.radius, style=PIESLICE, extent=self.pieAngle, outline=self.outlineColor, fill=self.fillColor, start=self.piePositionAngle)
+        self.chargeDeltaPie = self.canvas.create_arc(self.center-self.radius, self.center-self.radius, self.center+self.radius, self.center+self.radius, style=PIESLICE, extent=self.pieAngle, outline=self.outlineColor, fill=self.fillColor, start=self.piePositionAngle)
 
     def updateCharge(self):
         try:
@@ -49,12 +39,8 @@ class Charge(object):
             if (self.tempCounter < 0):
                 self.tempCounter = 0
                             
-            self.chargePie.itemconfigure(self.chargeDeltaPie, extent=self.tempCounter)
-            self.chargePie.update()
+            self.canvas.itemconfigure(self.chargeDeltaPie, extent=self.tempCounter)
+            self.canvas.update()
         except ValueError:
             pass
         self.root.after(self.frame_rate,self.updateCharge)
-        
-if __name__ == "__main__":
-    
-    testClass = Charge()
