@@ -8,3 +8,6 @@ UVic Formula Hybrid Repository for 2015
 
 ###Tkinter Notes
 1. Tips on [Performance](http://effbot.org/zone/tkinter-performance.htm)
+
+###Python Notes
+1. If needed c functionality, here is a library [ctypes](https://docs.python.org/2/library/ctypes.html)
