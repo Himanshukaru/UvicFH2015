@@ -12,4 +12,4 @@ UVic Formula Hybrid Repository for 2015
 ###Python Notes
 1. If needed c functionality, here is a library [ctypes](https://docs.python.org/2/library/ctypes.html)
 2. GPIO interrupts [GPIOinterrupts](http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio)
-3. Or we should be using listeners Vs. Polling [listeners](http://python-can.readthedocs.org/en/latest/listeners.html)
+3. Or we should be using [listeners](http://python-can.readthedocs.org/en/latest/listeners.html) Vs. Polling 
