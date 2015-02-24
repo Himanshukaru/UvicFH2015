@@ -1,4 +1,10 @@
 from CAN_Handler import *
+import can
+can.rc['interface'] = 'socketcan_native'
+
+from can.interfaces.interface import Bus
+
+can_interface = "can0"
 
 class CAN_Main(object):
 	"""
@@ -25,10 +31,15 @@ class CAN_Main(object):
 			self.current_PARAM = pValue
 			if(self.previous_PARAM != self.current_PARAM):
 			self.update_PARAM = True
+
+	ADD READ FROM CAN STUFF
+		pollBus() in FHguiTest
+		can message read
 	"""
 	def __init__(self, arg):
 		super(CAN_Main, self).__init__()
 		self.can_handler = CAN_Handler
+		bus
 
 		#Engine Signals
 		self.current_engine_coolant_temp = 0 
@@ -97,6 +108,13 @@ class CAN_Main(object):
 		self.current_engery_budget_status = 0
 		self.previous_engery_budget_status = 0
 		self.update_engery_budget_status = False
+
+	def pollBus(self):
+		try:	
+			msg = self.bus.recv()
+			self.process_CAN_message(msg)
+		except:
+			print("TODO m: We need to catch this, yo")
 
 	def process_CAN_message(pCan_frame):
 		self.can_handler.message_select(pCan_frame)
