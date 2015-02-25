@@ -15,9 +15,9 @@ class EfficiencyBar(object):
         self.createCanvas()
 
     def initializeValues(self):
-        self.backGroundColor = "#ffffff"
-        self.backGroundFillColor = "white"
-        self.outlineColor = "black"
+        self.backGroundColor = "#000000"
+        self.backGroundFillColor = "black"
+        self.outlineColor = "white"
         self.fillColor = "blue"
         
         self.testingChangeBool = False
@@ -36,7 +36,11 @@ class EfficiencyBar(object):
         self.tempCounter = self.efficiencyBarPositionX #TODO m: this will be the charge count; for now its a temp counter
         
     def makeMainFrame(self):
-        self.mainFrame = ttk.Frame(self.root, padding="0 0 0 0")
+        self.styleName = "TFrame"
+        self.style = ttk.Style()
+        self.style.configure(self.styleName, background="black")
+        
+        self.mainFrame = ttk.Frame(self.root, padding="0 0 0 0", style=self.styleName)
         self.mainFrame.grid(column=1, row=0, sticky=(N, E, W, S))
         self.mainFrame.columnconfigure(0, weight=1)
         self.mainFrame.rowconfigure(0, weight=1)
@@ -57,13 +61,10 @@ class EfficiencyBar(object):
                 self.tempCounter += 2
                 
             if (self.tempCounter > INNEFICIENT_DRIVING_LIMIT):
-                print(str(self.tempCounter) + " INNEFFECIENT")
                 self.canvas.itemconfigure(self.efficiencyBar, fill="red")
             elif (self.tempCounter < OVER_EFFICIENT_DRIVING_LIMIT):
-                print(str(self.tempCounter) + " OVEREFFECIENT")
                 self.canvas.itemconfigure(self.efficiencyBar, fill="yellow")
             elif (self.tempCounter > OVER_EFFICIENT_DRIVING_LIMIT and self.tempCounter < INNEFICIENT_DRIVING_LIMIT):
-                print(str(self.tempCounter) + " GOOD")
                 self.canvas.itemconfigure(self.efficiencyBar, fill="blue")
             
             if (self.tempCounter >= self.x1):

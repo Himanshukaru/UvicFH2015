@@ -16,6 +16,15 @@ class Speed(object):
         self.kphFont = "helvetica 10 bold"
         self.textColor = "white"
         
+        self.backGroundColor = "#ffffff"
+        self.outlineColor = "black"
+        self.backGroundFillColor = "black"
+        self.fillColor = "black"
+        
+        self.canvasWidth = 500
+        self.center = 120
+        self.radius = 90
+        
         self.frame_rate = 80
         self.centerX = 120
         self.centerY = 100
