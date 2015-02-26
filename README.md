@@ -8,10 +8,9 @@ UVic Formula Hybrid Repository for 2015
 3. You need to install GPIO Interrupts on the raspberry pi
 
 For Python 3:
-  ```
-  sudo apt-get -y install python3-rpi.gpio
-  ```
-
+```
+sudo apt-get -y install python3-rpi.gpio
+```
 ###Tkinter Notes
 1. Tips on [Performance](http://effbot.org/zone/tkinter-performance.htm)
 
