@@ -1,4 +1,5 @@
 from CAN_Opener import *
+from CAN_Main import *
 
 ONE_BIT_MASK        = 0x1
 TWO_BIT_MASK        = 0X3
@@ -20,8 +21,9 @@ FOURTEEN_BIT_MASK   = 0x3FFF
 FIFTEEN_BIT_MASK    = 0x7FFF
 SIXTEEN_BIT_MASK    = 0xFFFF
 
-class CAN_Handler(object):
+class CAN_Handler(CAN_Main):
 	"""
+	This class extends CAN_Main, and as such should be the one created by the main app
 
 	This will be the module to extact data from our messages
 	This is hardcoded, so if stuff changes this needs to changes
@@ -51,28 +53,28 @@ class CAN_Handler(object):
 
 	def message_one(data): #Engine Signals
 		msg_one_bits = self.can_tools.pack_data(data)
-		super.set_engine_coolant_temp(data[0])
-		super.set_engine_torque(data[1])
-		super.set_engine_RPM(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK))
-		super.set_throttle_percent(data[4])
+		self.set_engine_coolant_temp(data[0])
+		self.set_engine_torque(data[1])
+		self.set_engine_RPM(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK))
+		self.set_throttle_percent(data[4])
 
 	def message_two(data): #Warnings
 		msg_two_bits = self.can_tools.pack_data(data)
-		super.set_warning_ess_overtemp(self.can_tools.shift_mask(0, 1, msg_two_bits, ONE_BIT_MASK))
-		super.set_warning_fuel_level_low(self.can_tools.shift_mask(1, 1, msg_two_bits, ONE_BIT_MASK))
-		super.set_warning_glv_cockpit_brb(self.can_tools.shift_mask(2, 1, msg_two_bits, ONE_BIT_MASK))
-		super.set_warning_glv_soc_low(self.can_tools.shift_mask(3, 1, msg_two_bits, ONE_BIT_MASK))
-		super.set_warning_motor_over_temp(self.can_tools.shift_mask(4, 1, msg_two_bits, ONE_BIT_MASK))
-		super.set_warning_transmission_failure(self.can_tools.shift_mask(5, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_ess_overtemp(self.can_tools.shift_mask(0, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_fuel_level_low(self.can_tools.shift_mask(1, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_glv_cockpit_brb(self.can_tools.shift_mask(2, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_glv_soc_low(self.can_tools.shift_mask(3, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_motor_over_temp(self.can_tools.shift_mask(4, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_transmission_failure(self.can_tools.shift_mask(5, 1, msg_two_bits, ONE_BIT_MASK))
 	
 	def message_three(data): #Electrical Systems
-		super.set_ess_soc(data[0])
-		super.set_ess_voltage(data[1])
+		self.set_ess_soc(data[0])
+		self.set_ess_voltage(data[1])
 
 	def message_four(data): #Control 
 		msg_four_bits = self.can_tools.pack_data(data)
-		super.set_current_control_mode(self.can_tools.shift_mask(0, 2, msg_four_bits, TWO_BIT_MASK))
-		super.set_current_gear(self.can_tools(2, 4, msg_four_bits, FOUR_BIT_MASK))
-		super.set_vehicle_speed(data[2])
-		super.set_engery_budget_status(data[3])
+		self.set_current_control_mode(self.can_tools.shift_mask(0, 2, msg_four_bits, TWO_BIT_MASK))
+		self.set_current_gear(self.can_tools(2, 4, msg_four_bits, FOUR_BIT_MASK))
+		self.set_vehicle_speed(data[2])
+		self.set_engery_budget_status(data[3])
 

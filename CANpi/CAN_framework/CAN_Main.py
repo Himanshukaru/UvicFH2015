@@ -1,9 +1,7 @@
-from CAN_Handler import *
 import can
+
 can.rc['interface'] = 'socketcan_native'
-
 from can.interfaces.interface import Bus
-
 can_interface = "can0"
 
 class CAN_Main(object):
@@ -38,8 +36,8 @@ class CAN_Main(object):
 	"""
 	def __init__(self, arg):
 		super(CAN_Main, self).__init__()
-		self.can_handler = CAN_Handler
-		bus
+		can_handler = CAN_Handler
+		bus = Bus(can_interface)
 
 		#Engine Signals
 		self.current_engine_coolant_temp = 0 
