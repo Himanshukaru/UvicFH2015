@@ -30,17 +30,22 @@ class ChargePie(object):
         
         self.chargeDeltaPie = self.canvas.create_arc(self.center-self.radius, self.center-self.radius, self.center+self.radius, self.center+self.radius, style=PIESLICE, extent=self.pieAngle, outline=self.outlineColor, fill=self.fillColor, start=self.piePositionAngle)
 
-    def updateCharge(self):
-        try:
-            self.tempCounter -= 1
-
-            if (self.tempCounter > self.pieAngle):
-                self.tempCounter = self.pieAngle
-            if (self.tempCounter < 0):
-                self.tempCounter = 0
-                            
-            self.canvas.itemconfigure(self.chargeDeltaPie, extent=self.tempCounter)
+    def updateCharge(self, pCharge=None):
+        if pCharge is None:
+            try:
+                self.tempCounter -= 1
+    
+                if (self.tempCounter > self.pieAngle):
+                    self.tempCounter = self.pieAngle
+                if (self.tempCounter < 0):
+                    self.tempCounter = 0
+                                
+                self.canvas.itemconfigure(self.chargeDeltaPie, extent=self.tempCounter)
+                self.canvas.update()
+            except ValueError:
+                pass
+        else:
+            # TODO marc, we need to do some math on pCharge, it is set up from the pieAngel..
+            self.canvas.itemconfigure(self.chargeDeltaPie, extent=pCharge)
             self.canvas.update()
-        except ValueError:
-            pass
         self.root.after(self.frame_rate,self.updateCharge)
