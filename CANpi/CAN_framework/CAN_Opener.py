@@ -1,24 +1,4 @@
 import struct
-# Leaving these here, but they are not needed at this level for now
-# ONE_BIT_MASK        = 0x1
-# TWO_BIT_MASK        = 0X3
-# THREE_BIT_MASK      = 0x7
-# FOUR_BIT_MASK       = 0xF
-
-# FIVE_BIT_MASK       = 0x1F
-# SIX_BIT_MASK        = 0x3F
-# SEVEN_BIT_MASK      = 0x7F
-# EIGHT_BIT_MASK      = 0xFF
-
-# NINE_BIT_MASK       = 0x1FF
-# TEN_BIT_MASK        = 0x3FF
-# ELEVEN_BIT_MASK     = 0x7FF
-# TWELVE_BIT_MASK     = 0xFFF
-
-# THRIRTEEN_BIT_MASK  = 0x1FFF
-# FOURTEEN_BIT_MASK   = 0x3FFF
-# FIFTEEN_BIT_MASK    = 0x7FFF
-# SIXTEEN_BIT_MASK    = 0xFFFF
 
 class Can_opener(object):
 		"""
@@ -29,11 +9,10 @@ class Can_opener(object):
         """
     def __init__(self):
         super(Can_opener, self).__init__()
-        #self.arg = arg
     
     def pack_data(self, can_byte_array):
         buf=bytes()
-        buf=buf.join((struct.pack('B', val) for val in can_byte_array))
+        buf=buf.join((struct.pack('B', val) for val in can_byte_array)) 
         packed_can_data = int.from_bytes(buf, byteorder='big')
         return packed_can_data
     
