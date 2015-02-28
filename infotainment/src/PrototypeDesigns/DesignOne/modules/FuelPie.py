@@ -30,17 +30,21 @@ class FuelPie(object):
         self.fuelPie = self.canvas.create_arc(self.center-self.radius, self.center-self.radius, self.center+self.radius, self.center+self.radius, style=PIESLICE, extent=self.pieAngle, outline=self.outlineColor, fill=self.backGroundFillColor, start=self.piePositionAngle)       
         self.fuelDeltaPie = self.canvas.create_arc(self.center-self.radius, self.center-self.radius, self.center+self.radius, self.center+self.radius, style=PIESLICE, extent=self.pieAngle, outline=self.outlineColor, fill=self.fillColor, start=self.piePositionAngle)
         
-    def updateFuel(self):
-        try:
-            self.tempCounter += 1
-
-            if (self.tempCounter > self.pieAngle):
-                self.tempCounter = self.pieAngle
-            if (self.tempCounter < 0):
-                self.tempCounter = 0
-                            
-            self.canvas.itemconfigure(self.fuelDeltaPie, extent=self.tempCounter)
+    def updateFuel(self, pFuel=None):
+        if pFuel is None:
+            try:
+                self.tempCounter += 1
+    
+                if (self.tempCounter > self.pieAngle):
+                    self.tempCounter = self.pieAngle
+                if (self.tempCounter < 0):
+                    self.tempCounter = 0
+                                
+                self.canvas.itemconfigure(self.fuelDeltaPie, extent=self.tempCounter)
+                self.canvas.update()
+            except ValueError:
+                pass
+        else:
+            self.canvas.itemconfigure(self.fuelDeltaPie, extent=pFuel)
             self.canvas.update()
-        except ValueError:
-            pass
         self.root.after(self.frame_rate,self.updateFuel)
