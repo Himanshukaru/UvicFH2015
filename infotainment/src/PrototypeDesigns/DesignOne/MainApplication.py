@@ -1,13 +1,23 @@
 from tkinter import *
 from tkinter import ttk
-import math
-import time
+import os
 
 from modules import ChargePie, FuelPie, Speed
+
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
+except RuntimeError:
+    print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
+
+CHANGE_GUI_MODE_PIN = 24
+REBOOT_PIN = 23
 
 class MainApplication(object):
     root = Tk()
     def __init__(self):
+        #self.initializeInterrupts() # TODO marc implement once GPIO PINS are setup
         self.initializeMainWindow()
         self.initializeValues()
 
@@ -61,7 +71,26 @@ class MainApplication(object):
         self.state = False
         self.root.attributes("-fullscreen", False)
         return "break"
-                
+    
+    def changeGuiMode(self):
+        #TODO Marc, need to cleanup properly, clear all widgets below root
+        # Then go to next mode...
+        print("Changing Modes")
+    
+    def rebootSystem(self):
+        # TODO marc: we need to cleanup the gui prior to restarting..
+        GPIO.cleanup()
+        os.system("sudo reboot")
+
+    def initializeInterrupts(self):
+        GPIO.setmode(GPIO.BOARD)
+        
+        GPIO.setup(REBOOT_PIN, GPIO.IN)
+        GPIO.setup(CHANGE_MODE_PIN, GPIO.IN)
+        
+        GPIO.add_event_detect(REBOOT_PIN, GPIO.FALLING, callback=self.rebootSystem)
+        GPIO.add_event_detect(CHANGE_GUI_MODE_PIN, GPIO.FALLING, callback=self.changeGuiMode)
+        
 if __name__ == "__main__":
     
     mainApp = MainApplication()
