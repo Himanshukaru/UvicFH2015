@@ -12,8 +12,8 @@ except ImportError:
 except RuntimeError:
     print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
 
-CHANGE_GUI_MODE_PIN = 24
-REBOOT_PIN = 23
+CHANGE_GUI_MODE_PIN = 21
+REBOOT_PIN = 20
 
 class MainApplication(object):
     root = Tk()
@@ -73,18 +73,19 @@ class MainApplication(object):
         self.root.attributes("-fullscreen", False)
         return "break"
     
-    def changeGuiMode(self):
+    def changeGuiMode(self, channel):
         #TODO Marc, need to cleanup properly, clear all widgets below root
         # Then go to next mode...
         print("Changing Modes")
     
-    def rebootSystem(self):
+    def rebootSystem(self, channel):
         # TODO marc: we need to cleanup the gui prior to restarting..
         GPIO.cleanup()
-        os.system("sudo reboot")
+        #os.system("sudo reboot")
+        print("reboot")
 
     def initializeInterrupts(self):
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         
         GPIO.setup(REBOOT_PIN, GPIO.IN)
         GPIO.setup(CHANGE_MODE_PIN, GPIO.IN)
