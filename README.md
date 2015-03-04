@@ -18,4 +18,4 @@ sudo apt-get -y install python3-rpi.gpio
 1. If needed c functionality, here is a library [ctypes](https://docs.python.org/2/library/ctypes.html)
 2. GPIO interrupts [GPIOinterrupts](http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-rpi-gpio)
 3. POLLING ~~Or we should be using [listeners](http://python-can.readthedocs.org/en/latest/listeners.html)~~
-4. Python guideline for [raise](http://stackoverflow.com/questions/18289352/python-java-throws-equivalent-in-python)
+4. Python guideline for [raise](http://stackoverflow.com/questions/2052390/manually-raising-throwing-an-exception-in-python)
