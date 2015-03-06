@@ -1,5 +1,5 @@
-from CAN_Opener import *
-from CAN_Main import *
+import CAN_Opener
+import CAN_Main
 
 ONE_BIT_MASK        = 0x1
 TWO_BIT_MASK        = 0X3
@@ -21,7 +21,7 @@ FOURTEEN_BIT_MASK   = 0x3FFF
 FIFTEEN_BIT_MASK    = 0x7FFF
 SIXTEEN_BIT_MASK    = 0xFFFF
 
-class CAN_Handler(CAN_Main):
+class CAN_Handler(CAN_Main.CAN_Main):
 	"""
 	This class extends CAN_Main, and as such should be the one created by the main app
 
@@ -33,11 +33,22 @@ class CAN_Handler(CAN_Main):
 	pack_data(can_byte_array):
 
 	"""	
-	def __init__(self, arg):
+	def __init__(self):
 		super(CAN_Handler, self).__init__()
-		can_tools = CAN_Opener()
+		self.can_tools = CAN_Opener.Can_Opener()
 
-	def message_select(pCAN_frame):
+	def message_select(self, pCAN_frame):
+		if(pCAN_frame.arbitration_id == 0x100):
+			self.message_one(pCAN_frame.data)
+		elif(pCAN_frame.arbitration_id == 0x200):
+			self.message_two(pCAN_frame.data)
+		elif(pCAN_frame.arbitration_id == 0x300):
+			self.message_three(pCAN_frame.data)
+		elif(pCAN_frame.arbitration_id == 0x400):
+			self.message_four(pCAN_frame.data)
+		else:
+			pass
+		"""
 		switch(self.pCAN_frame.abitration_id){
 			case(0x100):
 				self.message_one(pCAN_frame.data)
@@ -50,15 +61,15 @@ class CAN_Handler(CAN_Main):
 			default:
 				pass
 		}
-
-	def message_one(data): #Engine Signals
+		"""
+	def message_one(self, data): #Engine Signals
 		msg_one_bits = self.can_tools.pack_data(data)
 		self.set_engine_coolant_temp(data[0])
 		self.set_engine_torque(data[1])
 		self.set_engine_RPM(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK))
 		self.set_throttle_percent(data[4])
 
-	def message_two(data): #Warnings
+	def message_two(self, data): #Warnings
 		msg_two_bits = self.can_tools.pack_data(data)
 		self.set_warning_ess_overtemp(self.can_tools.shift_mask(0, 1, msg_two_bits, ONE_BIT_MASK))
 		self.set_warning_fuel_level_low(self.can_tools.shift_mask(1, 1, msg_two_bits, ONE_BIT_MASK))
@@ -67,11 +78,11 @@ class CAN_Handler(CAN_Main):
 		self.set_warning_motor_over_temp(self.can_tools.shift_mask(4, 1, msg_two_bits, ONE_BIT_MASK))
 		self.set_warning_transmission_failure(self.can_tools.shift_mask(5, 1, msg_two_bits, ONE_BIT_MASK))
 	
-	def message_three(data): #Electrical Systems
+	def message_three(self, data): #Electrical Systems
 		self.set_ess_soc(data[0])
 		self.set_ess_voltage(data[1])
 
-	def message_four(data): #Control 
+	def message_four(self, data): #Control 
 		msg_four_bits = self.can_tools.pack_data(data)
 		self.set_current_control_mode(self.can_tools.shift_mask(0, 2, msg_four_bits, TWO_BIT_MASK))
 		self.set_current_gear(self.can_tools(2, 4, msg_four_bits, FOUR_BIT_MASK))
