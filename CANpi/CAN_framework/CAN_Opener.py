@@ -1,26 +1,21 @@
 import struct
 
-class Can_opener(object):
-		"""
-        How this works is to flatten the byte array, bit shift the flattened array, then mask it and return whatever falls out
-        Works regardless of how or where the data is positioned in the array, but array topology must be known. I left pack_data
-        and shift_mask as two functions since you really only need to flatten the data once per frame but you may need to shift
-        mask it out multiple times.
-        """
-    def __init__(self):
-        super(Can_opener, self).__init__()
+class Can_Opener(object):
+	def __init__(self):
+		#super(Can_Opener, self).__init__()
+		print("INIT")
+
+	def pack_data(self, can_byte_array):
+		buf = bytes()
+		buf = buf.join((struct.pack('B', val) for val in can_byte_array))
+		packed_can_data = int.from_bytes(buf, byteorder='big')
+		return packed_can_data
     
-    def pack_data(self, can_byte_array):
-        buf=bytes()
-        buf=buf.join((struct.pack('B', val) for val in can_byte_array)) 
-        packed_can_data = int.from_bytes(buf, byteorder='big')
-        return packed_can_data
-    
-    def shift_mask(self, start_loc, length, lumped_data, mask):
-        shift = 64 - start_loc - length 
-        lumped_data = lumped_data>>shift
-        lumped_data = lumped_data & mask
-        return lumped_data
+	def shift_mask(self, start_loc, length, lumped_data, mask):
+		shift = 64 - start_loc - length
+		lumped_data = lumped_data>>shift
+		lumped_data = lumped_data & mask
+		return lumped_data
 
 #Just some testing
 # test = Can_opener
