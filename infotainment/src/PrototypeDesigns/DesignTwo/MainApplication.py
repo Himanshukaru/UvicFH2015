@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import os
+import CAN_Main
 
 from modules import BatteryRect, FuelRect, EfficiencyBar, Speed
 
@@ -17,21 +18,23 @@ REBOOT_PIN = 20
 
 class MainApplication(object):
 	root = Tk()
+	frame_rate = 80
 	def __init__(self):
 		#self.initializeInterrupts() # TODO marc implement once GPIO PINS are setup
 		self.initializeMainWindow()	
-
+		self.canMain = CAN_Main.CAN_Main()
+		self.canMain.initializeInstances()
 		self.battery = BatteryRect.BatteryRect(self.root)
 		self.fuel = FuelRect.FuelRect(self.root)
 		self.effBar = EfficiencyBar.EfficiencyBar(self.root)
 		self.speedHub = Speed.Speed(self.root)
 		
 	def run(self):
-		
+		self.pollBus()
+		self.checkForUpdates()
 		self.battery.updateBatteryCharge()
 		self.fuel.updateFuelLevel()
 		self.effBar.updateBarPosition()
-		self.speedHub.updateSpeed()
 
 		self.root.mainloop()
 
@@ -53,6 +56,17 @@ class MainApplication(object):
 		self.state = False
 		self.root.attributes("-fullscreen", False)
 		return "break"
+
+	def pollBus(self):
+		self.canMain.pollBus()
+		self.root.after(self.frame_rate,self.pollBus)
+	
+	def checkForUpdates(self):
+		if self.canMain.update_vehicle_speed:
+			self.speedHub.updateSpeed(self.canMain.current_vehicle_speed)
+			self.canMain.update_vehicle_speed = False
+
+		self.root.after(self.frame_rate,self.checkForUpdates)
 	
 	def changeGuiMode(self, channel):
 		#TODO Marc, need to cleanup properly, clear all widgets below root
@@ -63,7 +77,6 @@ class MainApplication(object):
 		# TODO marc: we need to cleanup the gui prior to restarting..
 		GPIO.cleanup()
 		#os.system("sudo reboot")
-        print("reboot")
 
 	def initializeInterrupts(self):
 		GPIO.setmode(GPIO.BCM)

@@ -1,9 +1,32 @@
 import can
-import CAN_Handler
+import CAN_Opener
+"""
+Combines both CAN_MAIN and CAN_HANDLER
+"""
 
 can.rc['interface'] = 'socketcan_native'
 from can.interfaces.interface import Bus
 can_interface = "can0"
+
+ONE_BIT_MASK        = 0x1
+TWO_BIT_MASK        = 0X3
+THREE_BIT_MASK      = 0x7
+FOUR_BIT_MASK       = 0xF
+
+FIVE_BIT_MASK       = 0x1F
+SIX_BIT_MASK        = 0x3F
+SEVEN_BIT_MASK      = 0x7F
+EIGHT_BIT_MASK      = 0xFF
+
+NINE_BIT_MASK       = 0x1FF
+TEN_BIT_MASK        = 0x3FF
+ELEVEN_BIT_MASK     = 0x7FF
+TWELVE_BIT_MASK     = 0xFFF
+
+THRIRTEEN_BIT_MASK  = 0x1FFF
+FOURTEEN_BIT_MASK   = 0x3FFF
+FIFTEEN_BIT_MASK    = 0x7FFF
+SIXTEEN_BIT_MASK    = 0xFFFF
 
 class CAN_Main(object):
 	"""
@@ -35,6 +58,9 @@ class CAN_Main(object):
 		pollBus() in FHguiTest
 		can message read
 	"""
+	current_vehicle_speed = -1
+	previous_vehicle_speed = -2
+	update_vehicle_speed = False
 	def __init__(self):
 		#super(CAN_Main, self).__init__()
 		#self.can_handler = CAN_Handler.CAN_Handler()
@@ -99,10 +125,12 @@ class CAN_Main(object):
 		self.current_current_gear = 0
 		self.previous_current_gear = 0
 		self.update_current_gear = False
-
-		self.current_vehicle_speed = 0
-		self.previous_vehicle_speed = 0
+		
+		"""
+		self.current_vehicle_speed = -1
+		self.previous_vehicle_speed = -2
 		self.update_vehicle_speed = False
+		"""
 
 		self.current_engery_budget_status = 0
 		self.previous_engery_budget_status = 0
@@ -117,7 +145,7 @@ class CAN_Main(object):
 			raise
 
 	def process_CAN_message(self, pCan_frame):
-		self.can_handler.message_select(pCan_frame)
+		self.message_select(pCan_frame)
 
 	#engine coolant temp
 	def set_engine_coolant_temp(self, pValue):
@@ -125,8 +153,6 @@ class CAN_Main(object):
 		self.current_engine_coolant_temp = pValue
 		if(self.previous_engine_coolant_temp != self.current_engine_coolant_temp):
 			self.update_engine_coolant_temp = True
-			print("Engine Coolant temp update")
-			print("here is the new val: " + str(pValue))
 
 	#engine torque
 	def set_engine_torque(self, pValue):
@@ -234,11 +260,57 @@ class CAN_Main(object):
 			self.update_engery_budget_status = True
 
 	def initializeInstances(self):
-		self.can_handler = CAN_Handler.CAN_Handler()
 		self.bus = Bus(can_interface)
+		self.can_tools = CAN_Opener.Can_Opener()
 
-if __name__ == "__main__":
-	canTestMain = CAN_Main()
-	canTestMain.initializeInstances()
-	while True:
-		canTestMain.pollBus()
+	def message_select(self, pCAN_frame):
+		if(pCAN_frame.arbitration_id == 0x100):
+			self.message_one(pCAN_frame.data)
+		elif(pCAN_frame.arbitration_id == 0x200):
+			self.message_two(pCAN_frame.data)
+		elif(pCAN_frame.arbitration_id == 0x300):
+			self.message_three(pCAN_frame.data)
+		elif(pCAN_frame.arbitration_id == 0x400):
+			self.message_four(pCAN_frame.data)
+		else:
+			pass
+		"""
+		switch(self.pCAN_frame.abitration_id){
+			case(0x100):
+				self.message_one(pCAN_frame.data)
+			case(0x200):
+				self.message_two(pCAN_frame.data)
+			case(0x300):
+				self.message_three(pCAN_frame.data)
+			case(0x400):
+				self.message_four(pCAN_frame.data)
+			default:
+				pass
+		}
+		"""
+	def message_one(self, data): #Engine Signals
+		msg_one_bits = self.can_tools.pack_data(data)
+		self.set_engine_coolant_temp(data[0])
+		self.set_engine_torque(data[1])
+		self.set_engine_RPM(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK))
+		self.set_throttle_percent(data[4])
+
+	def message_two(self, data): #Warnings
+		msg_two_bits = self.can_tools.pack_data(data)
+		self.set_warning_ess_overtemp(self.can_tools.shift_mask(0, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_fuel_level_low(self.can_tools.shift_mask(1, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_glv_cockpit_brb(self.can_tools.shift_mask(2, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_glv_soc_low(self.can_tools.shift_mask(3, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_motor_over_temp(self.can_tools.shift_mask(4, 1, msg_two_bits, ONE_BIT_MASK))
+		self.set_warning_transmission_failure(self.can_tools.shift_mask(5, 1, msg_two_bits, ONE_BIT_MASK))
+	
+	def message_three(self, data): #Electrical Systems
+		self.set_ess_soc(data[0])
+		self.set_ess_voltage(data[1])
+
+	def message_four(self, data): #Control
+		msg_four_bits = self.can_tools.pack_data(data)
+		self.set_current_control_mode(self.can_tools.shift_mask(0, 2, msg_four_bits, TWO_BIT_MASK))
+		self.set_current_gear(self.can_tools.shift_mask(2, 4, msg_four_bits, FOUR_BIT_MASK))
+		self.set_vehicle_speed(data[1])
+		self.set_engery_budget_status(data[3])

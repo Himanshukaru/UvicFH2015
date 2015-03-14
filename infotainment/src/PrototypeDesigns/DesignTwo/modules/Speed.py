@@ -50,7 +50,7 @@ class Speed(object):
         self.speedText = self.canvas.create_text(self.centerX, self.centerY, text=self.speed, fill=self.textColor, font=self.speedFont)
         self.kphLabel = self.canvas.create_text(self.centerX, self.centerY + 20, text="kph", fill=self.textColor, font=self.kphFont)
 
-    def updateSpeed(self, pSpeed=None):
+    def updateSpeed(self, pSpeed):
         if pSpeed is None:
             try:
                 self.tempCounter += 1
@@ -61,15 +61,15 @@ class Speed(object):
                     self.tempCounter = 0
                 
                 self.speed = str(self.tempCounter)
-                self.canvas.itemconfigure(self.speedText, text=self.speed)
+                #self.canvas.itemconfigure(self.speedText, text=self.speed)
     
-                self.canvas.update()                                
+                #self.canvas.update()                                
             except ValueError:
                 pass
-        else:
-            try:
-                self.canvas.itemconfigure(self.speedText, text=str(pSpeed))
-                self.canvas.update()                                
-            except ValueError:
-                pass
+        
+        try:
+            self.canvas.itemconfigure(self.speedText, text=str(pSpeed))
+            self.canvas.update()                                
+        except ValueError:
+            pass
         self.root.after(self.frame_rate,self.updateSpeed)
