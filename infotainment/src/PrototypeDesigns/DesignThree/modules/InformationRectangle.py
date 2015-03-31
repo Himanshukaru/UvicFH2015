@@ -40,17 +40,17 @@ class InformationRectangle(object):
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0
         
-        self.canvasWidth = 990
+        self.canvasWidth = 970
         self.canvasHeight = 425
         
         self.centerX = 495
-        self.centerY = 275
+        self.centerY = 325
         self.maxSpeed = 280
         
         self.circleX1 = 295
         self.circleX2 = 695
-        self.circleY1 = 115
-        self.circleY2 = 515
+        self.circleY1 = 165
+        self.circleY2 = 565
         
     def initializeFontSizeColor(self):
         self.backGroundColor = "white"
@@ -66,10 +66,10 @@ class InformationRectangle(object):
         self.chargeTextFont = "helvetica 50 bold"
         
         self.speedHubFont = "helvetica 100 bold"
-        self.kphHubFont = "helvetica 10 bold"
+        self.kphHubFont = "helvetica 30 bold"
         
         self.rpmHubTextFont = "helvetica 50 bold"
-        self.rpmHubLabelFont = "helvetica 10 bold"
+        self.rpmHubLabelFont = "helvetica 30 bold"
         
         self.motorTpsTextFont = "helvetica 50 bold"
         self.motorTpsLabelFont = "helvetica 30 bold"
@@ -95,25 +95,25 @@ class InformationRectangle(object):
         self.fuelOffsetX = 280
         self.fuelOffsetY = 50
         
-        self.chargeLabelOffsetX = 120
-        self.chargeLabelOffsetY = 20        
-        self.chargeOffsetX = 290
-        self.chargeOffsetY = 20
+        self.chargeLabelOffsetX = 160
+        self.chargeLabelOffsetY = 30        
+        self.chargeOffsetX = 380
+        self.chargeOffsetY = 30
 
-        self.coolantLabelOffsetX = 130
-        self.coolantLabelOffsetY = 60
-        self.coolantTempOffsetX = 300
-        self.coolantTempOffsetY = 60
+        self.coolantLabelOffsetX = 170
+        self.coolantLabelOffsetY = 80
+        self.coolantTempOffsetX = 380
+        self.coolantTempOffsetY = 80
         
-        self.engineTpsTextOffsetX = 910
-        self.engineTpsTextOffsetY = 20
-        self.engineTpsLabelOffsetX = 770
-        self.engineTpsLabelOffsetY = 20
+        self.engineTpsTextOffsetX = 940
+        self.engineTpsTextOffsetY = 30
+        self.engineTpsLabelOffsetX = 750
+        self.engineTpsLabelOffsetY = 30
         
-        self.motorTpsTextOffsetX = 910
-        self.motorTpsTextOffsetY = 60
-        self.motorTpsLabelOffsetX = 760
-        self.motorTpsLabelOffsetY = 60
+        self.motorTpsTextOffsetX = 940
+        self.motorTpsTextOffsetY = 80
+        self.motorTpsLabelOffsetX = 740
+        self.motorTpsLabelOffsetY = 80
                       
     def makeMainFrame(self):
         self.styleName = "TFrame"
@@ -145,10 +145,10 @@ class InformationRectangle(object):
         
         self.hubCircle = self.canvas.create_oval(self.circleX1, self.circleY1, self.circleX2, self.circleY2, outline=self.outlineColor, fill=self.backGroundFillColor)
         self.speedText = self.canvas.create_text(self.centerX, self.centerY, text=self.speed, fill=self.textColor, font=self.speedHubFont)
-        self.kphLabel = self.canvas.create_text(self.centerX + 70, self.centerY + 30, text="kph", fill=self.textColor, font=self.kphHubFont)
+        self.kphLabel = self.canvas.create_text(self.centerX + 140, self.centerY + 30, text="kph", fill=self.textColor, font=self.kphHubFont)
         
         self.rpmText = self.canvas.create_text(self.centerX, self.centerY + 100, text=self.rpm, fill=self.textColor, font=self.rpmHubTextFont)
-        self.rpmLabel = self.canvas.create_text(self.centerX + 90, self.centerY + 110, text="rpm", fill=self.textColor, font=self.rpmHubLabelFont)
+        self.rpmLabel = self.canvas.create_text(self.centerX + 140, self.centerY + 110, text="rpm", fill=self.textColor, font=self.rpmHubLabelFont)
         
     def updateCoolantRectangle(self, pCoolant=None):
         if pCoolant is None:

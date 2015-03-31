@@ -70,22 +70,22 @@ class WarningRectangle(object):
         
     def initializeOffsets(self):
         
-        self.IMDLatchLabelOffsetX = 160
+        self.IMDLatchLabelOffsetX = 190
         self.IMDLatchLabelOffsetY = 20        
 
-        self.TSMSLatchLabelOffsetX = 170
+        self.TSMSLatchLabelOffsetX = 210
         self.TSMSLatchLabelOffsetY = 60
         
-        self.cockpitBRBLatchLabelOffsetX = 770
+        self.cockpitBRBLatchLabelOffsetX = 700
         self.cockpitBRBLatchLabelOffsetY = 20
         
-        self.BMSLatchLabelOffsetX = 840
+        self.BMSLatchLabelOffsetX = 790
         self.BMSLatchLabelOffsetY = 60
                       
     def makeMainFrame(self):
         self.styleName = "TFrame"
         self.style = ttk.Style()
-        self.style.configure(self.styleName, background="black")
+        self.style.configure(self.styleName, background="white", outline="white")
         
         self.mainFrame = ttk.Frame(self.root, padding="0 0 0 0", style=self.styleName)
         self.mainFrame.grid(column=1, row=2, sticky=(N, E, W, S))

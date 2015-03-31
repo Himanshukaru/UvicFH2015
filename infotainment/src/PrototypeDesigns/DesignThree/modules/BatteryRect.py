@@ -18,9 +18,9 @@ class BatteryRect(object):
         self.fillColor = "white"
         
         self.frame_rate = 80
-        self.x0 = 3
+        self.x0 = 0
         self.x1 = 140
-        self.y0 = 3
+        self.y0 = 0
         self.y1 = 668
         
         self.width = self.x1 - self.x0
