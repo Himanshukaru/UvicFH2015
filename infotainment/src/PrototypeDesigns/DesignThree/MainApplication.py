@@ -2,7 +2,8 @@ from tkinter import *
 from tkinter import ttk
 import os
 # import CAN_Main
-
+# Width: 1232
+# Height: 768
 from modules import BatteryRect, FuelRect, EfficiencyBar, Speed, InformationRectangle
 
 try:
@@ -46,7 +47,7 @@ class MainApplication(object):
         self.root.mainloop()
 
     def initializeMainWindow(self):
-        self.root.configure(bg="#000000")
+        self.root.configure(bg="black")
         self.root.title("Fuel-Mileage-test")
         self.root.attributes("-fullscreen", True)
         self.root.bind()
