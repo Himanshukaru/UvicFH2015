@@ -28,7 +28,7 @@ class FuelRect(object):
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0
         
-        self.currentFuel = self.y1
+        self.currentFuel = 0
         
         self.tempCounter = self.currentFuel  # TODO m: this will be the charge count; for now its a temp counter
         
@@ -53,7 +53,7 @@ class FuelRect(object):
     def updateFuelLevel(self, pFuel=None):
         if pFuel is None:
             try:
-                self.tempCounter -= 1
+                self.tempCounter += 1
     
                 if (self.tempCounter >= self.y1):
                     self.tempCounter = self.y1
