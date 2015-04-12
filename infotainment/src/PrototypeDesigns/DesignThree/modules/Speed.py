@@ -21,18 +21,15 @@ class Speed(object):
         self.backGroundFillColor = "blue"
         self.fillColor = "black"
         
-        self.canvasWidth = 500
-        self.canvasHeight = 325
-        self.circleX1 = 115
-        self.circleX2 = 415
+        self.canvasWidth = 990
+        self.canvasHeight = 425
+        self.circleX1 = 295
+        self.circleX2 = 695
         self.circleY1 = 15
-        self.circleY2 = 315
-        
-        self.center = 400
-        self.radius = 360
+        self.circleY2 = 415
         
         self.frame_rate = 80
-        self.centerX = 265
+        self.centerX = 495
         self.centerY = 165
         self.maxSpeed = 280
         
@@ -49,7 +46,7 @@ class Speed(object):
         self.mainFrame.grid(column=1, row=2, sticky=(N, E, W, S))
         
     def makeCanvas(self):
-        self.canvas = Canvas(self.mainFrame, background=self.backGroundColor, width=self.canvasWidth, height=self.canvasHeight, bg="#000000")
+        self.canvas = Canvas(self.mainFrame, background=self.backGroundColor, width=self.canvasWidth, height=self.canvasHeight, bg="black")
         self.canvas.grid(column=0, row=1, sticky=(N, E, W, S))
         self.hubCircle = self.canvas.create_oval(self.circleX1, self.circleY1, self.circleX2, self.circleY2, outline=self.outlineColor, fill=self.backGroundFillColor)
         self.speedText = self.canvas.create_text(self.centerX, self.centerY, text=self.speed, fill=self.textColor, font=self.speedFont)

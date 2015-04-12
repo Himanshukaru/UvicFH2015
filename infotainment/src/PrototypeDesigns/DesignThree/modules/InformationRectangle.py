@@ -31,7 +31,7 @@ class InformationRectangle(object):
         
         self.frame_rate = 80
         self.x0 = 0 + self.WINDOW_BUFFER
-        self.x1 = 500
+        self.x1 = 990
         self.y0 = 0 + self.WINDOW_BUFFER
         self.y1 = 80
         
@@ -89,7 +89,7 @@ class InformationRectangle(object):
         self.mainFrame.grid(column=1, row=1, sticky=(N, E, W, S))
         self.mainFrame.columnconfigure(0, weight=1)
         self.mainFrame.rowconfigure(0, weight=1)
-
+        
     def createCanvas(self):
         self.canvas = Canvas(self.mainFrame, width=self.width + self.WINDOW_BUFFER, height=self.height, background=self.backGroundColor)
         self.canvas.grid(column=0, row=0, sticky=(N, E, W, S))

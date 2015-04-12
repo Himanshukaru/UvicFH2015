@@ -19,9 +19,9 @@ class BatteryRect(object):
         
         self.frame_rate = 80
         self.x0 = 3
-        self.x1 = 80
+        self.x1 = 120
         self.y0 = 3
-        self.y1 = 100
+        self.y1 = 140
         
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0
