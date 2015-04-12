@@ -14,14 +14,14 @@ class BatteryRect(object):
     def initializeValues(self):
         self.backGroundColor = "#000000"
         self.backGroundFillColor = "green"
-        self.outlineColor = "black"
-        self.fillColor = "white"
+        self.outlineColor = "green"
+        self.fillColor = "black"
         
         self.frame_rate = 80
         self.x0 = 3
-        self.x1 = 60
+        self.x1 = 80
         self.y0 = 3
-        self.y1 = 80
+        self.y1 = 100
         
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0

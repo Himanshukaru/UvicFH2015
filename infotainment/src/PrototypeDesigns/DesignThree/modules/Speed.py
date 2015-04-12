@@ -21,13 +21,19 @@ class Speed(object):
         self.backGroundFillColor = "blue"
         self.fillColor = "black"
         
-        self.canvasWidth = 120 + 90 + 50
-        self.center = 100
-        self.radius = 90
+        self.canvasWidth = 500
+        self.canvasHeight = 325
+        self.circleX1 = 115
+        self.circleX2 = 415
+        self.circleY1 = 15
+        self.circleY2 = 315
+        
+        self.center = 400
+        self.radius = 360
         
         self.frame_rate = 80
-        self.centerX = 150
-        self.centerY = 80
+        self.centerX = 265
+        self.centerY = 165
         self.maxSpeed = 280
         
         self.speed = ""
@@ -43,14 +49,13 @@ class Speed(object):
         self.mainFrame.grid(column=1, row=2, sticky=(N, E, W, S))
         
     def makeCanvas(self):
-        self.canvas = Canvas(self.mainFrame, background=self.backGroundColor, width=self.canvasWidth, height=self.canvasWidth, bg="#000000")
+        self.canvas = Canvas(self.mainFrame, background=self.backGroundColor, width=self.canvasWidth, height=self.canvasHeight, bg="#000000")
         self.canvas.grid(column=0, row=1, sticky=(N, E, W, S))
-        
-        self.hubCircle = self.canvas.create_oval(self.center - self.radius + 50, self.center - self.radius, self.center + self.radius + 50, self.center + self.radius, outline=self.outlineColor, fill=self.backGroundFillColor)
+        self.hubCircle = self.canvas.create_oval(self.circleX1, self.circleY1, self.circleX2, self.circleY2, outline=self.outlineColor, fill=self.backGroundFillColor)
         self.speedText = self.canvas.create_text(self.centerX, self.centerY, text=self.speed, fill=self.textColor, font=self.speedFont)
         self.kphLabel = self.canvas.create_text(self.centerX, self.centerY + 20, text="kph", fill=self.textColor, font=self.kphFont)
 
-    def updateSpeed(self, pSpeed):
+    def updateSpeed(self, pSpeed=None):
         if pSpeed is None:
             try:
                 self.tempCounter += 1
@@ -66,10 +71,34 @@ class Speed(object):
                 # self.canvas.update()                                
             except ValueError:
                 pass
-        
-        try:
-            self.canvas.itemconfigure(self.speedText, text=str(pSpeed))
-            self.canvas.update()                                
-        except ValueError:
-            pass
+        else:
+            try:
+                self.canvas.itemconfigure(self.speedText, text=str(pSpeed))
+                self.canvas.update()                                
+            except ValueError:
+                pass
         self.root.after(self.frame_rate, self.updateSpeed)
+        
+    def updateRPM(self, pRPM=None):
+        if pRPM is None:
+            try:
+                self.tempCounter += 1
+    
+                if (self.tempCounter > self.maxSpeed):
+                    self.tempCounter = self.maxSpeed
+                if (self.tempCounter < 0):
+                    self.tempCounter = 0
+                
+                self.speed = str(self.tempCounter)
+                # self.canvas.itemconfigure(self.speedText, text=self.speed)
+    
+                # self.canvas.update()                                
+            except ValueError:
+                pass
+        else:
+            try:
+                self.canvas.itemconfigure(self.speedText, text=str(pRPM))
+                self.canvas.update()                                
+            except ValueError:
+                pass
+        self.root.after(self.frame_rate, self.updateRPM)

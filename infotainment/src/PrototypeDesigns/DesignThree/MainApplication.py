@@ -33,14 +33,15 @@ class MainApplication(object):
     def run(self):
         self.pollBus()
 		#self.checkForUpdates()
-        self.battery.updateBatteryCharge()
-        self.fuel.updateFuelLevel()
+        self.battery.updateBatteryCharge(10)
+        self.fuel.updateFuelLevel(10)
+        self.speedHub.updateSpeed(10)
         #self.effBar.updateBarPosition()
-        self.infoRect.updateFuelRectangle()
-        self.infoRect.updateSpeedRectangle()
-        self.infoRect.updateRPMRectangle()
-        self.infoRect.updateChargeRectangle()
-        self.infoRect.updateCoolantRectangle()
+        self.infoRect.updateFuelRectangle(10)
+        self.infoRect.updateSpeedRectangle(10)
+        self.infoRect.updateRPMRectangle(10)
+        self.infoRect.updateChargeRectangle(10)
+        self.infoRect.updateCoolantRectangle(10)
 
         self.root.mainloop()
 
