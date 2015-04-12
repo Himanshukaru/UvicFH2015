@@ -116,12 +116,12 @@ class WarningRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.IMDLatchLabel, fill="red")
+                self.canvas.itemconfigure(self.IMDLatchLabel, fill="white")
                 self.canvas.update()
             except ValueError:
                 pass
         else:
-            self.canvas.itemconfigure(self.IMDLatchLabel, fill="white")
+            self.canvas.itemconfigure(self.IMDLatchLabel, fill="red")
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateIMDLatchWarning)
         
@@ -135,13 +135,13 @@ class WarningRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.BMSLatchLabel, fill="red")
+                self.canvas.itemconfigure(self.BMSLatchLabel, fill="white")
                 self.canvas.update()
             except ValueError:
                 pass
         else:
             self.charge = pCharge
-            self.canvas.itemconfigure(self.BMSLatchLabel, fill="white")
+            self.canvas.itemconfigure(self.BMSLatchLabel, fill="red")
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateBMSLatchWarning)
         
@@ -155,13 +155,13 @@ class WarningRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.TSMSLatchLabel, fill="red")
+                self.canvas.itemconfigure(self.TSMSLatchLabel, fill="white")
                 self.canvas.update()
             except ValueError:
                 pass
         else:
             self.engineTps = pEngineTPS
-            self.canvas.itemconfigure(self.TSMSLatchLabel, fill="white")
+            self.canvas.itemconfigure(self.TSMSLatchLabel, fill="red")
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateTSMSLatchWarning)
         
@@ -175,13 +175,13 @@ class WarningRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.cockpitBRBLatchLabel, fill="red")
+                self.canvas.itemconfigure(self.cockpitBRBLatchLabel, fill="white")
                 self.canvas.update()
             except ValueError:
                 pass
         else:
             self.motorTps = pMotorTPS
-            self.canvas.itemconfigure(self.cockpitBRBLatchLabel, fill="white")
+            self.canvas.itemconfigure(self.cockpitBRBLatchLabel, fill="red")
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateCockPitBRBLatchWarning)
         
