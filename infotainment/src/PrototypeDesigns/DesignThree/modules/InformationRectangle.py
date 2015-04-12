@@ -25,6 +25,8 @@ class InformationRectangle(object):
         self.charge = 0
         self.rpm = 0
         self.coolant = 0
+        self.motorTps = 0
+        self.engineTps = 0
         
     def initializeCanvasSize(self):
         self.WINDOW_BUFFER = 2
@@ -38,19 +40,42 @@ class InformationRectangle(object):
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0
         
-    def initializeFontSizeColor(self):
-        self.backGroundColor = "#000000"
-        self.backGroundFillColor = "black"
-        self.outlineColor = "black"
-        self.fillColor = "white"
+        self.canvasWidth = 990
+        self.canvasHeight = 425
         
-        self.speedFont = "helvetica 30 bold"
-        self.kphFont = "helvetica 10 bold"
-        self.textColor = "white"
-        self.rpmLabelFont = "helvetica 10 bold"
-        self.rpmTextFont = "helvetica 30 bold"
-        self.coolantLabelFont = "helvetica 10 bold"
-        self.coolantTextFont = "helvetica 30 bold"
+        self.centerX = 495
+        self.centerY = 275
+        self.maxSpeed = 280
+        
+        self.circleX1 = 295
+        self.circleX2 = 695
+        self.circleY1 = 115
+        self.circleY2 = 515
+        
+    def initializeFontSizeColor(self):
+        self.backGroundColor = "white"
+        self.backGroundFillColor = "grey"
+        self.outlineColor = "white"
+        self.fillColor = "white"        
+        self.textColor = "black"
+        
+        self.coolantLabelFont = "helvetica 30 bold"
+        self.coolantTextFont = "helvetica 50 bold"
+        
+        self.chargeLabelFont = "helvetica 30 bold"
+        self.chargeTextFont = "helvetica 50 bold"
+        
+        self.speedHubFont = "helvetica 100 bold"
+        self.kphHubFont = "helvetica 10 bold"
+        
+        self.rpmHubTextFont = "helvetica 50 bold"
+        self.rpmHubLabelFont = "helvetica 10 bold"
+        
+        self.motorTpsTextFont = "helvetica 50 bold"
+        self.motorTpsLabelFont = "helvetica 30 bold"
+        
+        self.engineTpsTextFont = "helvetica 50 bold"
+        self.engineTpsLabelFont = "helvetica 30 bold"
         
         
     def initializeOffsets(self):
@@ -70,15 +95,25 @@ class InformationRectangle(object):
         self.fuelOffsetX = 280
         self.fuelOffsetY = 50
         
-        self.chargeLabelOffsetX = 200
-        self.chargeLabelOffsetY = 10        
-        self.chargeOffsetX = 280
-        self.chargeOffsetY = 10
+        self.chargeLabelOffsetX = 120
+        self.chargeLabelOffsetY = 20        
+        self.chargeOffsetX = 290
+        self.chargeOffsetY = 20
 
-        self.coolantLabelOffsetX = 380
-        self.coolantLabelOffsetY = 10
-        self.coolantTempOffsetX = 340
-        self.coolantTempOffsetY = 10
+        self.coolantLabelOffsetX = 130
+        self.coolantLabelOffsetY = 60
+        self.coolantTempOffsetX = 300
+        self.coolantTempOffsetY = 60
+        
+        self.engineTpsTextOffsetX = 910
+        self.engineTpsTextOffsetY = 20
+        self.engineTpsLabelOffsetX = 770
+        self.engineTpsLabelOffsetY = 20
+        
+        self.motorTpsTextOffsetX = 910
+        self.motorTpsTextOffsetY = 60
+        self.motorTpsLabelOffsetX = 760
+        self.motorTpsLabelOffsetY = 60
                       
     def makeMainFrame(self):
         self.styleName = "TFrame"
@@ -94,22 +129,26 @@ class InformationRectangle(object):
         self.canvas = Canvas(self.mainFrame, width=self.width + self.WINDOW_BUFFER, height=self.height, background=self.backGroundColor)
         self.canvas.grid(column=0, row=0, sticky=(N, E, W, S))
         
-        self.canvas.create_rectangle(self.x0, self.y0, self.x1, self.y1, outline=self.outlineColor, fill=self.backGroundFillColor)
+        self.canvas.create_rectangle(self.x0, self.y0, self.x1, self.y1, outline=self.outlineColor, fill="white")
         
-        self.speedText = self.canvas.create_text(self.x0 + self.speedOffsetX, self.y0 + self.speedOffsetY, text=self.speed, fill=self.textColor, font=self.speedFont)
-        self.speedLabel = self.canvas.create_text(self.x0 + self.speedLabelOffsetX, self.y0 + self.speedLabelOffsetY, text="KPH", fill=self.textColor, font=self.kphFont)
-        
-        self.fuelText = self.canvas.create_text(self.x0 + self.fuelOffsetX, self.y0 + self.fuelOffsetY, text=self.fuel, fill=self.textColor, font=self.speedFont)
-        self.fuelLabel = self.canvas.create_text(self.x0 + self.fuelLabelOffsetX, self.y0 + self.fuelLabelOffsetY, text="Fuel % Left:", fill=self.textColor, font=self.kphFont)
-        
-        self.chargeText = self.canvas.create_text(self.x0 + self.chargeOffsetX, self.y0 + self.chargeOffsetY, text=self.charge, fill=self.textColor, font=self.speedFont)
-        self.chargeLabel = self.canvas.create_text(self.x0 + self.chargeLabelOffsetX, self.y0 + self.chargeLabelOffsetY, text="Charge % Left:", fill=self.textColor, font=self.kphFont)
-        
-        self.rpmText = self.canvas.create_text(self.x0 + self.rpmOffsetX, self.y0 + self.rpmOffsetY, text=self.rpm, fill=self.textColor, font=self.rpmTextFont)
-        self.rpmLabel = self.canvas.create_text(self.x0 + self.rpmLabelOffsetX, self.y0 + self.rpmLabelOffsetY, text="RPM", fill=self.textColor, font=self.rpmLabelFont)
+        self.chargeText = self.canvas.create_text(self.x0 + self.chargeOffsetX, self.y0 + self.chargeOffsetY, text=self.charge, fill=self.textColor, font=self.chargeTextFont)
+        self.chargeLabel = self.canvas.create_text(self.x0 + self.chargeLabelOffsetX, self.y0 + self.chargeLabelOffsetY, text="Battery SOC (%):", fill=self.textColor, font=self.chargeLabelFont)
         
         self.coolantText = self.canvas.create_text(self.x0 + self.coolantTempOffsetX, self.y0 + self.coolantTempOffsetY, text=self.coolant, fill=self.textColor, font=self.coolantTextFont)
-        self.coolantLabel = self.canvas.create_text(self.x0 + self.coolantLabelOffsetX, self.y0 + self.coolantLabelOffsetY, text="CLT", fill=self.textColor, font=self.coolantLabelFont)
+        self.coolantLabel = self.canvas.create_text(self.x0 + self.coolantLabelOffsetX, self.y0 + self.coolantLabelOffsetY, text="Coolant Temp (F):", fill=self.textColor, font=self.coolantLabelFont)
+        
+        self.engineTpsText = self.canvas.create_text(self.x0 + self.engineTpsTextOffsetX, self.y0 + self.engineTpsTextOffsetY, text=self.engineTps, fill=self.textColor, font=self.engineTpsTextFont)
+        self.engineTpsLabel = self.canvas.create_text(self.x0 + self.engineTpsLabelOffsetX, self.y0 + self.engineTpsLabelOffsetY, text="Engine TPS (%):", fill=self.textColor, font=self.engineTpsLabelFont)
+        
+        self.motorTpsText = self.canvas.create_text(self.x0 + self.motorTpsTextOffsetX, self.y0 + self.motorTpsTextOffsetY, text=self.motorTps, fill=self.textColor, font=self.motorTpsTextFont)
+        self.motorTpsLabel = self.canvas.create_text(self.x0 + self.motorTpsLabelOffsetX, self.y0 + self.motorTpsLabelOffsetY, text="Motor TPS (%):", fill=self.textColor, font=self.motorTpsLabelFont)
+        
+        self.hubCircle = self.canvas.create_oval(self.circleX1, self.circleY1, self.circleX2, self.circleY2, outline=self.outlineColor, fill=self.backGroundFillColor)
+        self.speedText = self.canvas.create_text(self.centerX, self.centerY, text=self.speed, fill=self.textColor, font=self.speedHubFont)
+        self.kphLabel = self.canvas.create_text(self.centerX + 70, self.centerY + 30, text="kph", fill=self.textColor, font=self.kphHubFont)
+        
+        self.rpmText = self.canvas.create_text(self.centerX, self.centerY + 100, text=self.rpm, fill=self.textColor, font=self.rpmHubTextFont)
+        self.rpmLabel = self.canvas.create_text(self.centerX + 90, self.centerY + 110, text="rpm", fill=self.textColor, font=self.rpmHubLabelFont)
         
     def updateCoolantRectangle(self, pCoolant=None):
         if pCoolant is None:
@@ -131,25 +170,6 @@ class InformationRectangle(object):
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateCoolantRectangle)
         
-    def updateFuelRectangle(self, pFuel=None):
-        if pFuel is None:
-            try:
-                self.tempCounter -= 1
-    
-                if (self.tempCounter >= self.y1):
-                    self.tempCounter = self.y1
-                if (self.tempCounter <= self.y0):
-                    self.tempCounter = self.y0
-                
-                self.canvas.itemconfigure(self.fuelText, text=str(self.tempCounter))
-                self.canvas.update()
-            except ValueError:
-                pass
-        else:
-            self.fuel = pFuel
-            self.canvas.itemconfigure(self.fuelText, text=str(pFuel))
-            self.canvas.update()
-        self.root.after(self.frame_rate, self.updateFuelRectangle)
 
     def updateSpeedRectangle(self, pSpeed=None):
         if pSpeed is None:
@@ -209,20 +229,46 @@ class InformationRectangle(object):
             self.canvas.itemconfigure(self.chargeText, text=str(pCharge))
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateChargeRectangle)
+        
+    def updateEngineTPS(self, pEngineTPS=None):
+        if pEngineTPS is None:
+            try:
+                self.tempCounter -= 1
+    
+                if (self.tempCounter >= self.y1):
+                    self.tempCounter = self.y1
+                if (self.tempCounter <= self.y0):
+                    self.tempCounter = self.y0
+                
+                self.canvas.itemconfigure(self.engineTpsText, text=str(self.tempCounter))
+                self.canvas.update()
+            except ValueError:
+                pass
+        else:
+            self.engineTps = pEngineTPS
+            self.canvas.itemconfigure(self.engineTpsText, text=str(pEngineTPS))
+            self.canvas.update()
+        self.root.after(self.frame_rate, self.updateEngineTPS)
+        
+    def updateMotorTPS(self, pMotorTPS=None):
+        if pMotorTPS is None:
+            try:
+                self.tempCounter -= 1
+    
+                if (self.tempCounter >= self.y1):
+                    self.tempCounter = self.y1
+                if (self.tempCounter <= self.y0):
+                    self.tempCounter = self.y0
+                
+                self.canvas.itemconfigure(self.motorTpsText, text=str(self.tempCounter))
+                self.canvas.update()
+            except ValueError:
+                pass
+        else:
+            self.motorTps = pMotorTPS
+            self.canvas.itemconfigure(self.motorTpsText, text=str(pMotorTPS))
+            self.canvas.update()
+        self.root.after(self.frame_rate, self.updateMotorTPS)
     
     def updateWarnings(self):
         print("Warnings, yo")
-
-#===============================================================================
-# if __name__ == "__main__":
-#     root = Tk()
-#     testRect = InformationRectangle(root)
-#     
-#     testRect.updateFuelRectangle()
-#     testRect.updateSpeedRectangle()
-#     testRect.updateRPMRectangle()
-#     testRect.updateChargeRectangle()
-#     testRect.updateCoolantRectangle()
-#     
-#     root.mainloop()
-#===============================================================================

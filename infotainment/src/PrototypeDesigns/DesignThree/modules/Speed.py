@@ -47,7 +47,7 @@ class Speed(object):
         
     def makeCanvas(self):
         self.canvas = Canvas(self.mainFrame, background=self.backGroundColor, width=self.canvasWidth, height=self.canvasHeight, bg="black")
-        self.canvas.grid(column=0, row=1, sticky=(N, E, W, S))
+        self.canvas.grid(column=0, row=0, sticky=(N, E, W, S))
         self.hubCircle = self.canvas.create_oval(self.circleX1, self.circleY1, self.circleX2, self.circleY2, outline=self.outlineColor, fill=self.backGroundFillColor)
         self.speedText = self.canvas.create_text(self.centerX, self.centerY, text=self.speed, fill=self.textColor, font=self.speedFont)
         self.kphLabel = self.canvas.create_text(self.centerX, self.centerY + 20, text="kph", fill=self.textColor, font=self.kphFont)
@@ -94,7 +94,7 @@ class Speed(object):
                 pass
         else:
             try:
-                self.canvas.itemconfigure(self.speedText, text=str(pRPM))
+                self.canvas.itemconfigure(self.kphLabel, text=str(pRPM))
                 self.canvas.update()                                
             except ValueError:
                 pass
