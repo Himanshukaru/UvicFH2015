@@ -26,7 +26,7 @@ class BatteryRect(object):
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0
         
-        self.currentCharge = self.y1
+        self.currentCharge = 0
         
         self.tempCounter = self.currentCharge  # TODO m: this will be the charge count; for now its a temp counter
         
@@ -51,7 +51,7 @@ class BatteryRect(object):
     def updateBatteryCharge(self, pCharge=None):
         if pCharge is None:
             try:
-                self.tempCounter -= 1
+                self.tempCounter += 1
     
                 if (self.tempCounter >= self.y1):
                     self.tempCounter = self.y1
