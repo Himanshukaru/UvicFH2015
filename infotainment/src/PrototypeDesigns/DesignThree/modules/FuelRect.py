@@ -14,16 +14,16 @@ class FuelRect(object):
     def initializeValues(self):
         self.backGroundColor = "#000000"
         self.backGroundFillColor = "brown"
-        self.outlineColor = "black"
-        self.fillColor = "white"
+        self.outlineColor = "brown"
+        self.fillColor = "black"
         
-        self.WINDOW_BUFFER = 2
+        self.WINDOW_BUFFER = 3
         
         self.frame_rate = 80
         self.x0 = 0 + self.WINDOW_BUFFER
-        self.x1 = 60
+        self.x1 = 80
         self.y0 = 0 + self.WINDOW_BUFFER
-        self.y1 = 80
+        self.y1 = 100
         
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0

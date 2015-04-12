@@ -31,7 +31,7 @@ class InformationRectangle(object):
         
         self.frame_rate = 80
         self.x0 = 0 + self.WINDOW_BUFFER
-        self.x1 = 800
+        self.x1 = 500
         self.y0 = 0 + self.WINDOW_BUFFER
         self.y1 = 80
         
@@ -40,7 +40,7 @@ class InformationRectangle(object):
         
     def initializeFontSizeColor(self):
         self.backGroundColor = "#000000"
-        self.backGroundFillColor = "grey"
+        self.backGroundFillColor = "black"
         self.outlineColor = "black"
         self.fillColor = "white"
         
@@ -126,6 +126,7 @@ class InformationRectangle(object):
             except ValueError:
                 pass
         else:
+            self.coolant = pCoolant
             self.canvas.itemconfigure(self.coolantText, text=str(pCoolant))
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateCoolantRectangle)
@@ -145,6 +146,7 @@ class InformationRectangle(object):
             except ValueError:
                 pass
         else:
+            self.fuel = pFuel
             self.canvas.itemconfigure(self.fuelText, text=str(pFuel))
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateFuelRectangle)
@@ -164,6 +166,7 @@ class InformationRectangle(object):
             except ValueError:
                 pass
         else:
+            self.speed = pSpeed
             self.canvas.itemconfigure(self.speedText, text=str(pSpeed))
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateSpeedRectangle)
@@ -202,6 +205,7 @@ class InformationRectangle(object):
             except ValueError:
                 pass
         else:
+            self.charge = pCharge
             self.canvas.itemconfigure(self.chargeText, text=str(pCharge))
             self.canvas.update()
         self.root.after(self.frame_rate, self.updateChargeRectangle)
@@ -209,14 +213,16 @@ class InformationRectangle(object):
     def updateWarnings(self):
         print("Warnings, yo")
 
-if __name__ == "__main__":
-    root = Tk()
-    testRect = InformationRectangle(root)
-    
-    testRect.updateFuelRectangle()
-    testRect.updateSpeedRectangle()
-    testRect.updateRPMRectangle()
-    testRect.updateChargeRectangle()
-    testRect.updateCoolantRectangle()
-    
-    root.mainloop()
+#===============================================================================
+# if __name__ == "__main__":
+#     root = Tk()
+#     testRect = InformationRectangle(root)
+#     
+#     testRect.updateFuelRectangle()
+#     testRect.updateSpeedRectangle()
+#     testRect.updateRPMRectangle()
+#     testRect.updateChargeRectangle()
+#     testRect.updateCoolantRectangle()
+#     
+#     root.mainloop()
+#===============================================================================
