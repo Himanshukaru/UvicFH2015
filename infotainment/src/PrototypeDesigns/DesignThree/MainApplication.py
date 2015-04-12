@@ -4,7 +4,7 @@ import os
 # import CAN_Main
 # Width: 1232
 # Height: 768
-from modules import BatteryRect, FuelRect, EfficiencyBar, Speed, InformationRectangle
+from modules import BatteryRect, FuelRect, EfficiencyBar, InformationRectangle, WarningRectangle
 
 try:
     import RPi.GPIO as GPIO
@@ -27,27 +27,32 @@ class MainApplication(object):
         # self.canMain.initializeInstances()
         self.battery = BatteryRect.BatteryRect(self.root)
         self.fuel = FuelRect.FuelRect(self.root)
-        #self.effBar = EfficiencyBar.EfficiencyBar(self.root)
-        self.speedHub = Speed.Speed(self.root)
         self.infoRect = InformationRectangle.InformationRectangle(self.root)
+        self.warnRect = WarningRectangle.WarningRectangle(self.root)
 		
     def run(self):
         self.pollBus()
 		#self.checkForUpdates()
         self.battery.updateBatteryCharge(10)
         self.fuel.updateFuelLevel(10)
-        self.speedHub.updateSpeed(10)
+        #self.speedHub.updateSpeed(10)
         #self.effBar.updateBarPosition()
-        self.infoRect.updateFuelRectangle(10)
         self.infoRect.updateSpeedRectangle(10)
         self.infoRect.updateRPMRectangle(10)
         self.infoRect.updateChargeRectangle(10)
         self.infoRect.updateCoolantRectangle(10)
+        self.infoRect.updateMotorTPS(10)
+        self.infoRect.updateEngineTPS(10)
+        
+        self.warnRect.updateCockPitBRBLatchWarning()
+        self.warnRect.updateTSMSLatchWarning()
+        self.warnRect.updateBMSLatchWarning()
+        self.warnRect.updateIMDLatchWarning()
 
         self.root.mainloop()
 
     def initializeMainWindow(self):
-        self.root.configure(bg="black")
+        self.root.configure(bg="white")
         self.root.title("Fuel-Mileage-test")
         self.root.attributes("-fullscreen", True)
         self.root.bind()

@@ -12,18 +12,18 @@ class FuelRect(object):
         self.createCanvas()
 
     def initializeValues(self):
-        self.backGroundColor = "#000000"
+        self.backGroundColor = "white"
         self.backGroundFillColor = "brown"
         self.outlineColor = "brown"
-        self.fillColor = "black"
+        self.fillColor = "white"
         
         self.WINDOW_BUFFER = 3
         
         self.frame_rate = 80
         self.x0 = 0 + self.WINDOW_BUFFER
-        self.x1 = 120
+        self.x1 = 140
         self.y0 = 0 + self.WINDOW_BUFFER
-        self.y1 = 140
+        self.y1 = 668
         
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0

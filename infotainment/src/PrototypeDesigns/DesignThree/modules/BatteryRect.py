@@ -12,16 +12,16 @@ class BatteryRect(object):
         self.createCanvas()
 
     def initializeValues(self):
-        self.backGroundColor = "#000000"
+        self.backGroundColor = "white"
         self.backGroundFillColor = "green"
         self.outlineColor = "green"
-        self.fillColor = "black"
+        self.fillColor = "white"
         
         self.frame_rate = 80
         self.x0 = 3
-        self.x1 = 120
+        self.x1 = 140
         self.y0 = 3
-        self.y1 = 140
+        self.y1 = 668
         
         self.width = self.x1 - self.x0
         self.height = self.y1 - self.y0
