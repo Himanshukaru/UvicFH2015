@@ -16,6 +16,7 @@ class BatteryRect(object):
         self.backGroundFillColor = "green"
         self.outlineColor = "green"
         self.fillColor = "white"
+        self.font = "helvetica 30 bold"
         
         self.frame_rate = 80
         self.x0 = 0
@@ -47,8 +48,9 @@ class BatteryRect(object):
         self.canvas.create_rectangle(self.x0, self.y0, self.x1, self.y1, outline=self.outlineColor, fill=self.backGroundFillColor)
         
         self.batteryDeltaobject = self.canvas.create_rectangle(self.x0, self.y0, self.x1, self.tempCounter, outline=self.outlineColor, fill=self.fillColor)
+        self.chargeText = self.canvas.create_text(self.width/2, self.height/2, text=self.currentCharge, fill="black", font=self.font)
 
-    def updateBatteryCharge(self, pCharge=None):
+    def updateBatteryCharge(self, pCharge):
         if pCharge is None:
             try:
                 self.tempCounter += 1
@@ -63,9 +65,10 @@ class BatteryRect(object):
             except ValueError:
                 pass
         try:
-            displayVar = pCharge*self.height/100
+            displayVar = self.height - ((pCharge/100)*self.height)
             self.canvas.coords(self.batteryDeltaobject, (self.x0, self.y0, self.x1, displayVar))
+            self.canvas.itemconfigure(self.chargeText, text=str(pCharge) + " %")
             self.canvas.update()
-        except:
+        except ValueError:
             pass  # Todo We need to handle these better...
-        self.root.after(self.frame_rate, self.updateBatteryCharge)
+        #self.root.after(self.frame_rate, self.updateBatteryCharge)
