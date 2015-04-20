@@ -60,13 +60,16 @@ class FuelRect(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.coords(self.fuelDeltaobject, (self.x0, self.y0, self.x1, self.tempCounter))
-                self.canvas.update()
+                #self.canvas.coords(self.fuelDeltaobject, (self.x0, self.y0, self.x1, self.tempCounter))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
-            self.canvas.coords(self.fuelDeltaobject, (self.x0, self.y0, self.x1, pFuel))
+        try:
+            displayVar = pFuel*self.height/100
+            self.canvas.coords(self.fuelDeltaobject, (self.x0, self.y0, self.x1, displayVar))
             self.canvas.update()
+        except:
+            pass
         self.root.after(self.frame_rate, self.updateFuelLevel)
          
 if __name__ == "__main__":
