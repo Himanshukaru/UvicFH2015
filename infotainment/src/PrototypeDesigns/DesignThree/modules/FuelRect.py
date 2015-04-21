@@ -16,7 +16,7 @@ class FuelRect(object):
         self.backGroundFillColor = "orange"
         self.outlineColor = "orange"
         self.fillColor = "white"
-        
+        self.font = "helvetica 30 bold"
         self.WINDOW_BUFFER = 0
         
         self.frame_rate = 80
@@ -47,10 +47,10 @@ class FuelRect(object):
         self.canvas.grid(column=0, row=0, sticky=(N, E, W, S))
         
         self.canvas.create_rectangle(self.x0, self.y0, self.x1, self.y1, outline=self.outlineColor, fill=self.backGroundFillColor)
-        
         self.fuelDeltaobject = self.canvas.create_rectangle(self.x0, self.y0, self.x1, self.tempCounter, outline=self.outlineColor, fill=self.fillColor)
-
-    def updateFuelLevel(self, pFuel=None):
+        self.fuelText = self.canvas.create_text(self.width/2, self.height/2, text=self.currentFuel, fill="black", font=self.font)
+        
+    def updateFuelLevel(self, pFuel):
         if pFuel is None:
             try:
                 self.tempCounter += 1
@@ -65,15 +65,10 @@ class FuelRect(object):
             except ValueError:
                 pass
         try:
-            displayVar = pFuel*self.height/100
+            displayVar = self.height - ((pFuel/100)*self.height)
             self.canvas.coords(self.fuelDeltaobject, (self.x0, self.y0, self.x1, displayVar))
+            self.canvas.itemconfigure(self.fuelText, text=str(pFuel) + " %")
             self.canvas.update()
-        except:
+        except ValueError:
             pass
-        self.root.after(self.frame_rate, self.updateFuelLevel)
-         
-if __name__ == "__main__":
-    root = Tk()
-    testFuel = FuelRect(root)
-    testFuel.updateFuelLevel()
-    root.mainloop()
+        #self.root.after(self.frame_rate, self.updateFuelLevel, None)

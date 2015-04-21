@@ -150,7 +150,7 @@ class InformationRectangle(object):
         self.rpmText = self.canvas.create_text(self.centerX, self.centerY + 100, text=self.rpm, fill=self.textColor, font=self.rpmHubTextFont)
         self.rpmLabel = self.canvas.create_text(self.centerX + 140, self.centerY + 110, text="rpm", fill=self.textColor, font=self.rpmHubLabelFont)
         
-    def updateCoolantRectangle(self, pCoolant=None):
+    def updateCoolantRectangle(self, pCoolant):
         if pCoolant is None:
             try:
                 self.tempCounter -= 1
@@ -160,18 +160,18 @@ class InformationRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.coolantText, text=str(self.tempCounter))
-                self.canvas.update()
+                #self.canvas.itemconfigure(self.coolantText, text=str(self.tempCounter))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
-            self.coolant = pCoolant
+        try:
             self.canvas.itemconfigure(self.coolantText, text=str(pCoolant))
             self.canvas.update()
-        self.root.after(self.frame_rate, self.updateCoolantRectangle)
+        except:
+            pass
+        #self.root.after(self.frame_rate, self.updateCoolantRectangle)
         
-
-    def updateSpeedRectangle(self, pSpeed=None):
+    def updateSpeedRectangle(self, pSpeed):
         if pSpeed is None:
             try:
                 self.tempCounter -= 1
@@ -181,17 +181,18 @@ class InformationRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.speedText, text=str(self.tempCounter))
-                self.canvas.update()
+                #self.canvas.itemconfigure(self.speedText, text=str(self.tempCounter))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
-            self.speed = pSpeed
+        try:
             self.canvas.itemconfigure(self.speedText, text=str(pSpeed))
             self.canvas.update()
-        self.root.after(self.frame_rate, self.updateSpeedRectangle)
+        except:
+            pass
+        #self.root.after(self.frame_rate, self.updateSpeedRectangle)
 
-    def updateRPMRectangle(self, pRPM=None):
+    def updateRPMRectangle(self, pRPM):
         if pRPM is None:
             try:
                 self.tempCounter -= 1
@@ -201,16 +202,18 @@ class InformationRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.rpmText, text=str(self.tempCounter * 1000))
-                self.canvas.update()
+                #self.canvas.itemconfigure(self.rpmText, text=str(self.tempCounter * 1000))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
+        try:
             self.canvas.itemconfigure(self.rpmText, text=str(pRPM))
             self.canvas.update()
-        self.root.after(self.frame_rate, self.updateRPMRectangle)
+        except:
+            pass
+        #self.root.after(self.frame_rate, self.updateRPMRectangle)
         
-    def updateChargeRectangle(self, pCharge=None):
+    def updateChargeRectangle(self, pCharge):
         if pCharge is None:
             try:
                 self.tempCounter -= 1
@@ -220,17 +223,18 @@ class InformationRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.chargeText, text=str(self.tempCounter))
-                self.canvas.update()
+                #self.canvas.itemconfigure(self.chargeText, text=str(self.tempCounter))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
-            self.charge = pCharge
+        try:
             self.canvas.itemconfigure(self.chargeText, text=str(pCharge))
             self.canvas.update()
-        self.root.after(self.frame_rate, self.updateChargeRectangle)
+        except:
+            pass
+        #self.root.after(self.frame_rate, self.updateChargeRectangle)
         
-    def updateEngineTPS(self, pEngineTPS=None):
+    def updateEngineTPS(self, pEngineTPS):
         if pEngineTPS is None:
             try:
                 self.tempCounter -= 1
@@ -240,17 +244,18 @@ class InformationRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.engineTpsText, text=str(self.tempCounter))
-                self.canvas.update()
+                #self.canvas.itemconfigure(self.engineTpsText, text=str(self.tempCounter))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
-            self.engineTps = pEngineTPS
+        try:
             self.canvas.itemconfigure(self.engineTpsText, text=str(pEngineTPS))
             self.canvas.update()
-        self.root.after(self.frame_rate, self.updateEngineTPS)
+        except:
+            pass
+        #self.root.after(self.frame_rate, self.updateEngineTPS)
         
-    def updateMotorTPS(self, pMotorTPS=None):
+    def updateMotorTPS(self, pMotorTPS):
         if pMotorTPS is None:
             try:
                 self.tempCounter -= 1
@@ -260,15 +265,13 @@ class InformationRectangle(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.itemconfigure(self.motorTpsText, text=str(self.tempCounter))
-                self.canvas.update()
+                #self.canvas.itemconfigure(self.motorTpsText, text=str(self.tempCounter))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
-            self.motorTps = pMotorTPS
+        try:
             self.canvas.itemconfigure(self.motorTpsText, text=str(pMotorTPS))
             self.canvas.update()
-        self.root.after(self.frame_rate, self.updateMotorTPS)
-    
-    def updateWarnings(self):
-        print("Warnings, yo")
+        except:
+            pass
+        #self.root.after(self.frame_rate, self.updateMotorTPS)
