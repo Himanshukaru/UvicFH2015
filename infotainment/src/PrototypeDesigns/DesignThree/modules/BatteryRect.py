@@ -58,14 +58,14 @@ class BatteryRect(object):
                 if (self.tempCounter <= self.y0):
                     self.tempCounter = self.y0
                 
-                self.canvas.coords(self.batteryDeltaobject, (self.x0, self.y0, self.x1, self.tempCounter))
-                self.canvas.update()
+                #self.canvas.coords(self.batteryDeltaobject, (self.x0, self.y0, self.x1, self.tempCounter))
+                #self.canvas.update()
             except ValueError:
                 pass
-        else:
-            try:
-                self.canvas.coords(self.batteryDeltaobject, (self.x0, self.y0, self.x1, pCharge))
-                self.canvas.update()
-            except:
-                pass  # Todo We need to handle these better...
+        try:
+            displayVar = pCharge*self.height/100
+            self.canvas.coords(self.batteryDeltaobject, (self.x0, self.y0, self.x1, displayVar))
+            self.canvas.update()
+        except:
+            pass  # Todo We need to handle these better...
         self.root.after(self.frame_rate, self.updateBatteryCharge)
