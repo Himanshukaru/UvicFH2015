@@ -2,7 +2,35 @@ import can
 import CAN_Opener
 """
 Combines both CAN_MAIN and CAN_HANDLER
+
 """
+
+"""
+For message filtering
+
+ID we care about
+0x100
+0x200
+0x300
+
+Mask
+0x700
+"""
+
+CAN_MASK = 0x700
+
+CAN_MESSAGE_1 = 0x100
+CAN_MESSAGE_2 = 0x200
+CAN_MESSAGE_3 = 0x300
+CAN_MESSAGE_4 = 0x400
+
+ENTRY_1 = {'can_id':CAN_MESSAGE_1, 'can_mask':CAN_MASK}
+ENTRY_2 = {'can_id':CAN_MESSAGE_2, 'can_mask':CAN_MASK}
+ENTRY_3 = {'can_id':CAN_MESSAGE_3, 'can_mask':CAN_MASK}
+ENTRY_4 = {'can_id':CAN_MESSAGE_4, 'can_mask':CAN_MASK}
+
+FILTER_DICTIONARY_LIST = [ENTRY_1,ENTRY_2,ENTRY_3,ENTRY_4]
+
 
 can.rc['interface'] = 'socketcan_native'
 from can.interfaces.interface import Bus
@@ -62,9 +90,11 @@ class CAN_Main(object):
 	previous_vehicle_speed = -2
 	update_vehicle_speed = False
 	def __init__(self):
+
+
 		#super(CAN_Main, self).__init__()
 		#self.can_handler = CAN_Handler.CAN_Handler()
-		#self.bus = Bus(can_interface)
+		#self.bus = Bus(can_interface,(FILTER_DICTIONARY_LIST))
 
 		#Engine Signals
 		self.current_engine_coolant_temp = 0 
@@ -260,7 +290,7 @@ class CAN_Main(object):
 			self.update_engery_budget_status = True
 
 	def initializeInstances(self):
-		self.bus = Bus(can_interface)
+		self.bus = Bus(can_interface,can_filters=FILTER_DICTIONARY_LIST)
 		self.can_tools = CAN_Opener.Can_Opener()
 
 	def message_select(self, pCAN_frame):
