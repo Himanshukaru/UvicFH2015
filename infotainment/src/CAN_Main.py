@@ -148,6 +148,10 @@ class CAN_Main(object):
 		self.update_ess_voltage = False
 
 		#self.#Control 
+		self.current_odometer = 0
+		self.previous_odometer= 0
+		self.update_odometer = False
+
 		self.current_current_control_mode = 0 #not confusing at all
 		self.previous_current_control_mode = 0
 		self.update_current_control_mode = False
@@ -261,6 +265,20 @@ class CAN_Main(object):
 		if(self.previous_ess_voltage != self.current_ess_voltage):
 			self.update_ess_voltage = True
 
+	#current ess voltage
+	def set_odometer(self, pValue):
+		self.previous_odometer = self.current_odometer
+		self.current_odometer = pValue
+		if(self.previous_odometer != self.current_odometer):
+			self.update_odometer = True
+
+	#current odometer reading
+	def set_PARAM(pValue):
+		self.previous_odometer= self.current_odometer
+		self.current_odometer = pValue
+		if(self.previous_odometer != self.current_odometer):
+			self.update_odometer = True
+
 	#current control mode
 	def set_current_control_mode(self, pValue):
 		self.previous_current_control_mode = self.current_current_control_mode
@@ -344,3 +362,5 @@ class CAN_Main(object):
 		self.set_current_gear(self.can_tools.shift_mask(2, 4, msg_four_bits, FOUR_BIT_MASK))
 		self.set_vehicle_speed(data[1])
 		self.set_engery_budget_status(data[3])
+		self.set_odometer(data[4])
+
