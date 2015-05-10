@@ -24,12 +24,14 @@ class MainApplication(object):
     def __init__(self):
         # self.initializeInterrupts() # TODO marc implement once GPIO PINS are setup
         self.initializeMainWindow()	
-        self.canMain = CAN_Main.CAN_Main()
-        self.canMain.initializeInstances()
+
         self.battery = BatteryRect.BatteryRect(self.root)
         self.fuel = FuelRect.FuelRect(self.root)
         self.infoRect = InformationRectangle.InformationRectangle(self.root)
         self.warnRect = WarningRectangle.WarningRectangle(self.root)
+
+        self.canMain = CAN_Main.CAN_Main()
+        self.canMain.initializeInstances()
         		
     def run(self):
         self.pollBus()
