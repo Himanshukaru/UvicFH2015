@@ -70,7 +70,7 @@ class MainApplication(object):
             self.canMain.update_engine_RPM = False
 #              
         if self.canMain.update_throttle_percent:
-            self.infoRect.updateSpeed(self.canMain.current_throttle_percent)
+            self.infoRect.updateEngineTPS(self.canMain.current_throttle_percent)
             self.canMain.update_throttle_percent = False
 #              
         if self.canMain.update_engine_coolant_temp:
