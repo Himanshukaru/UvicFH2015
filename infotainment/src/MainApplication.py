@@ -82,7 +82,7 @@ class MainApplication(object):
 #             self.canMain.update_vehicle_speed = False
 #         
         if self.canMain.update_ess_soc:
-            self.battery.updateBatteryCharge(self.current_ess_soc)
+            self.battery.updateBatteryCharge(self.canMain.current_ess_soc)
             self.canMain,update_ess_soc = False
             
 #        TODO Need to implement can interface for fuel
