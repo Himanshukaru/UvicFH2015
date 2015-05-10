@@ -82,6 +82,7 @@ class MainApplication(object):
 #             self.canMain.update_vehicle_speed = False
 #         
         if self.canMain.update_ess_soc:
+            self.infoRect.updateChargeRectangle(self.canMain.current_ess_soc)
             self.battery.updateBatteryCharge(self.canMain.current_ess_soc)
             self.canMain.update_ess_soc = False
             
