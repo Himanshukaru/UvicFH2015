@@ -74,7 +74,7 @@ class MainApplication(object):
             self.canMain.update_throttle_percent = False
 #              
         if self.canMain.update_engine_coolant_temp:
-            self.speedHub.updateSpeed(self.canMain.current_engine_coolant_temp)
+            self.infoRect.updateCoolantRectangle(self.canMain.current_engine_coolant_temp)
             self.canMain.update_engine_coolant_temp = False
 #              
 #         if self.canMain.update_vehicle_speed:
@@ -83,7 +83,7 @@ class MainApplication(object):
 #         
         if self.canMain.update_ess_soc:
             self.battery.updateBatteryCharge(self.canMain.current_ess_soc)
-            self.canMain,update_ess_soc = False
+            self.canMain.update_ess_soc = False
             
 #        TODO Need to implement can interface for fuel
 #         if self..canMain.update_fuel_level:
