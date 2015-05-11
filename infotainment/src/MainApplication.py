@@ -68,43 +68,24 @@ class MainApplication(object):
             self.infoRect.updateRPMRectangle(self.canMain.current_engine_RPM)
             self.canMain.update_vehicle_speed = False
             self.canMain.update_engine_RPM = False
-#              
+              
         if self.canMain.update_throttle_percent:
             self.infoRect.updateEngineTPS(self.canMain.current_throttle_percent)
             self.canMain.update_throttle_percent = False
-#              
+              
         if self.canMain.update_engine_coolant_temp:
             self.infoRect.updateCoolantRectangle(self.canMain.current_engine_coolant_temp)
             self.canMain.update_engine_coolant_temp = False
-#              
-#         if self.canMain.update_vehicle_speed:
-#             self.speedHub.updateSpeed(self.canMain.current_vehicle_speed)
-#             self.canMain.update_vehicle_speed = False
-#         
+
         if self.canMain.update_ess_soc:
             self.infoRect.updateChargeRectangle(self.canMain.current_ess_soc)
             self.battery.updateBatteryCharge(self.canMain.current_ess_soc)
             self.canMain.update_ess_soc = False
             
 #        TODO Need to implement can interface for fuel
-#         if self..canMain.update_fuel_level:
+#         if self.canMain.update_fuel_level:
 #             
 #        TODO Need to implement can interface for motor TPS
-
-        # BELOW IS FOR TESTING
-        #self.fuel.updateFuelLevel(randint(0,100))
-        #self.battery.updateBatteryCharge(randint(0, 100))
-        #self.infoRect.updateSpeedRectangle(randint(0,100))
-        #self.infoRect.updateRPMRectangle(randint(0,13000)) 
-        #self.infoRect.updateChargeRectangle(randint(0,100))
-        #self.infoRect.updateCoolantRectangle(randint(0,100))
-        #self.infoRect.updateMotorTPS(randint(0,100))
-        #self.infoRect.updateEngineTPS(randint(0,100))
-          
-        #self.warnRect.updateCockPitBRBLatchWarning(True)
-        #self.warnRect.updateTSMSLatchWarning(True)
-        #self.warnRect.updateBMSLatchWarning(True)
-        #self.warnRect.updateIMDLatchWarning(True)
          
         self.root.after(self.frame_rate, self.checkForUpdates)
 	
