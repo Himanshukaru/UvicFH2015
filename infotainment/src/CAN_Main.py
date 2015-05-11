@@ -197,11 +197,9 @@ class CAN_Main(object):
 
 	#engine RPM
 	def set_engine_RPM(self, pValue):
-		print("previous rpm= " + str(self.current_engine_RPM))
-		print("current  rpm= " + str(pValue))
 		self.previous_engine_RPM = self.current_engine_RPM
 		self.current_engine_RPM = pValue
-		if(self.previous_engine_RPM == self.current_engine_RPM):
+		if(self.previous_engine_RPM != self.current_engine_RPM):
 			self.update_engine_RPM = True
 
 	#throttle percent
