@@ -21,7 +21,7 @@ class WarningRectangle(object):
     def initializeCanvasSize(self):
         self.WINDOW_BUFFER = 2
         
-        self.frame_rate = 80
+        self.frame_rate = 40
         self.x0 = 0 + self.WINDOW_BUFFER
         self.x1 = 990
         self.y0 = 0 + self.WINDOW_BUFFER
