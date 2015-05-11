@@ -322,26 +322,16 @@ class CAN_Main(object):
 			self.message_four(pCAN_frame.data)
 		else:
 			pass
-		"""
-		switch(self.pCAN_frame.abitration_id){
-			case(0x100):
-				self.message_one(pCAN_frame.data)
-			case(0x200):
-				self.message_two(pCAN_frame.data)
-			case(0x300):
-				self.message_three(pCAN_frame.data)
-			case(0x400):
-				self.message_four(pCAN_frame.data)
-			default:
-				pass
-		}
-		"""
+
+	def shiftData(self, pValue, pShiftPlaces):
+		return pValue>>pShiftPlaces
+
 	def message_one(self, data): #Engine Signals
 		msg_one_bits = self.can_tools.pack_data(data)
-		self.set_engine_coolant_temp(data[0])
+		self.set_engine_coolant_temp(shiftData(data[0], 1))
 		self.set_engine_torque(data[1])
-		self.set_engine_RPM(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK))
-		self.set_throttle_percent(data[4])
+		self.set_engine_RPM(shiftData(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK), 8))
+		self.set_throttle_percent(shiftData(data[4], 1))
 
 	def message_two(self, data): #Warnings
 		msg_two_bits = self.can_tools.pack_data(data)
@@ -353,7 +343,7 @@ class CAN_Main(object):
 		self.set_warning_transmission_failure(self.can_tools.shift_mask(5, 1, msg_two_bits, ONE_BIT_MASK))
 	
 	def message_three(self, data): #Electrical Systems
-		self.set_ess_soc(data[0])
+		self.set_ess_soc(shiftData(data[0], 1))
 		self.set_ess_voltage(data[1])
 
 	def message_four(self, data): #Control
