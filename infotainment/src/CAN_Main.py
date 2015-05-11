@@ -330,7 +330,7 @@ class CAN_Main(object):
 		msg_one_bits = self.can_tools.pack_data(data)
 		self.set_engine_coolant_temp(self.shiftData(data[0], 1))
 		self.set_engine_torque(data[1])
-		self.set_engine_RPM(self.shiftData(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK), 8))
+		self.set_engine_RPM(data[3]*256 + data[2])
 		self.set_throttle_percent(self.shiftData(data[4], 1))
 
 	def message_two(self, data): #Warnings
