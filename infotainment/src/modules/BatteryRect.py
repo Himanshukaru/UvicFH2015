@@ -18,7 +18,7 @@ class BatteryRect(object):
         self.fillColor = "white"
         self.font = "helvetica 30 bold"
         
-        self.frame_rate = 80
+        self.frame_rate = 40
         self.x0 = 0
         self.x1 = 140
         self.y0 = 0

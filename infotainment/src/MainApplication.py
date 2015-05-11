@@ -20,7 +20,7 @@ REBOOT_PIN = 20
 
 class MainApplication(object):
     root = Tk()
-    frame_rate = 80
+    frame_rate = 40
     def __init__(self):
         # self.initializeInterrupts() # TODO marc implement once GPIO PINS are setup
         self.initializeMainWindow()	
@@ -63,10 +63,12 @@ class MainApplication(object):
 	
     
     def checkForUpdates(self):
-        if self.canMain.update_vehicle_speed or self.canMain.update_engine_RPM:
+        if self.canMain.update_vehicle_speed:
             self.infoRect.updateSpeedRectangle(self.canMain.current_vehicle_speed)
-            self.infoRect.updateRPMRectangle(self.canMain.current_engine_RPM)
             self.canMain.update_vehicle_speed = False
+
+        if self.canMain.update_engine_RPM:
+            self.infoRect.updateRPMRectangle(self.canMain.current_engine_RPM)
             self.canMain.update_engine_RPM = False
               
         if self.canMain.update_throttle_percent:
