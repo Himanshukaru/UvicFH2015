@@ -172,7 +172,7 @@ class CAN_Main(object):
 
 	def pollBus(self):
 		try:	
-			msg = self.bus.recv()
+			msg = self.bus.recv(timeout=10)
 			self.process_CAN_message(msg)
 		except :
 			print("TODO m: We need to catch this, yo")
@@ -328,10 +328,10 @@ class CAN_Main(object):
 
 	def message_one(self, data): #Engine Signals
 		msg_one_bits = self.can_tools.pack_data(data)
-		self.set_engine_coolant_temp(shiftData(data[0], 1))
+		self.set_engine_coolant_temp(self.shiftData(data[0], 1))
 		self.set_engine_torque(data[1])
-		self.set_engine_RPM(shiftData(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK), 8))
-		self.set_throttle_percent(shiftData(data[4], 1))
+		self.set_engine_RPM(self.shiftData(self.can_tools.shift_mask(16, 16, msg_one_bits, SIXTEEN_BIT_MASK), 8))
+		self.set_throttle_percent(self.shiftData(data[4], 1))
 
 	def message_two(self, data): #Warnings
 		msg_two_bits = self.can_tools.pack_data(data)
@@ -343,7 +343,7 @@ class CAN_Main(object):
 		self.set_warning_transmission_failure(self.can_tools.shift_mask(5, 1, msg_two_bits, ONE_BIT_MASK))
 	
 	def message_three(self, data): #Electrical Systems
-		self.set_ess_soc(shiftData(data[0], 1))
+		self.set_ess_soc(self.shiftData(data[0], 1))
 		self.set_ess_voltage(data[1])
 
 	def message_four(self, data): #Control
